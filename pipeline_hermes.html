@@ -842,10 +842,43 @@
     <!-- CONTEÚDO -->
     <div id="content" class="panel">
       <div class="sub-tabs">
-        <button class="active" onclick="switchSubTab('content-planejamento', this)">Planejamento</button>
+        <button class="active" onclick="switchSubTab('content-kanban', this)">Kanban</button>
+        <button onclick="switchSubTab('content-planejamento', this)">Planejamento</button>
         <button onclick="switchSubTab('content-producao', this)">Produção</button>
         <button onclick="switchSubTab('content-distribuicao', this)">Distribuição</button>
         <button onclick="switchSubTab('content-analytics', this)">Analytics</button>
+      </div>
+
+      <div id="content-kanban" class="sub-panel open">
+        <div class="suggestion-box">
+          <div class="crm-board">
+            <div class="crm-column">
+              <h3>Planejado</h3>
+              <div class="count">Conteúdo</div>
+              <div class="card-item"><h4>Reels/short</h4><p>Tema: onboarding no ecossistema</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <div class="card-item"><h4>Post LinkedIn</h4><p>Tema: caso EPQ</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>A fazer</h3>
+              <div class="count">Conteúdo</div>
+              <div class="card-item"><h4>Artigo/blog</h4><p>Tema: integrações do ecossistema</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>Fazendo</h3>
+              <div class="count">Conteúdo</div>
+              <div class="card-item"><h4>Peça gráfica</h4><p>Banner para forecast.html</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>Publicado</h3>
+              <div class="count">Conteúdo</div>
+              <div class="card-item"><h4>Post</h4><p>Link direto para publicação</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="content-planejamento" class="sub-panel open">
