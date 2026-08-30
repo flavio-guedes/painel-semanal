@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agenda Semanal — Flávio Guedes</title>
+<title>Painel Semanal — Flávio Guedes</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #f6f7fb; color: #111827; font-family: 'Inter', system-ui, sans-serif; padding: 0; }
@@ -11,6 +11,24 @@
   header { margin-bottom: 22px; }
   header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
   header p { color: #475569; font-size: 14px; margin-top: 6px; }
+
+  .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 720px) { .kpi { grid-template-columns: repeat(2, 1fr); } }
+  .kpi .item { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 6px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: #0f172a; }
+  .kpi .value.red { color: #e11d48; }
+  .kpi .value.blue { color: #2563eb; }
+  .kpi .value.green { color: #15803d; }
+  .kpi .value.amber { color: #b45309; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tabs button { padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .tabs button:hover { background: #1e293b; }
+  .tabs button.active { background: #4169E1; border-color: #4169E1; color: #ffffff; }
+
+  .panel { display: none; }
+  .panel.open { display: block; }
 
   .day { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
   .day h2 { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
@@ -28,116 +46,837 @@
   .time-desc { font-size: 13px; color: #334155; }
   .highlight { color: #4169E1; font-weight: 700; }
 
-  .section-title { font-size: 16px; font-weight: 700; color: #0f172a; margin: 22px 0 10px; }
-  .focus-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-  .focus-pills span { padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #eef2ff; color: #1e3a8a; border: 1px solid #c7d2fe; }
+  .sub-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .sub-tabs button { padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e5e7eb; color: #334155; background: #ffffff; cursor: pointer; }
+  .sub-tabs button:hover { background: #f1f5f9; }
+  .sub-tabs button.active { background: #0f172a; border-color: #0f172a; color: #ffffff; }
+
+  .sub-panel { display: none; }
+  .sub-panel.open { display: block; }
+
+  .crm-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .crm-board { grid-template-columns: 1fr; } }
+  .crm-column { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .crm-column h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 10px; text-align: center; }
+  .crm-column .count { font-size: 12px; color: #64748b; text-align: center; margin-bottom: 10px; }
+  .crm-column .card-item { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+  .crm-column .card-item h4 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+  .crm-column .card-item p { font-size: 12px; color: #475569; line-height: 1.3; }
+  .crm-column .actions { display: flex; gap: 6px; margin-top: 6px; }
+  .crm-column .actions button { flex: 1; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .crm-column .actions button:hover { background: #1e293b; }
+
+  .action-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .action-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .action-box .action-item { background: #f8fafc; border-left: 3px solid #4169E1; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+  .action-box .action-item input[type="checkbox"] { margin-top: 3px; }
+  .action-box .action-item-content strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
+  .action-box .action-item-content p { font-size: 12px; color: #334155; line-height: 1.4; }
+  .action-box .action-item.done { border-left-color: #15803d; background: #f0fff4; }
+  .action-box .action-item.done .action-item-content strong { text-decoration: line-through; color: #14532d; }
+  .action-box .action-item.done .action-item-content p { text-decoration: line-through; color: #14532d; }
+
+  .integration-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .integration-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .integration-item { background: #f8fafc; border-left: 3px solid #b45309; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
+  .integration-item strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
+  .integration-item p { font-size: 12px; color: #334155; line-height: 1.4; }
+  .integration-item.done { border-left-color: #15803d; background: #f0fff4; }
+
+  .master-status { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .master-status h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .master-status .status-line { font-size: 13px; color: #334155; margin-bottom: 6px; }
+  .master-status .status-line strong { color: #0f172a; }
+
+  .download-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .download-bar button { padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .download-bar button:hover { background: #1e293b; }
+
+  details { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  summary { font-size: 15px; font-weight: 700; color: #0f172a; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  summary::after { content: '+'; font-size: 18px; color: #4169E1; }
+  details[open] summary::after { content: '-'; }
+  .details-body { margin-top: 12px; }
+  .details-body h4 { font-size: 13px; font-weight: 700; color: #0f172a; margin-top: 10px; margin-bottom: 4px; }
+  .details-body p, .details-body li { font-size: 13.5px; color: #334155; line-height: 1.45; }
+  .details-body ul { margin-left: 18px; }
+  .details-body li { margin-bottom: 6px; }
+  code { background: #f1f5f9; padding: 2px 7px; border-radius: 7px; font-size: 12px; color: #0f172a; border: 1px solid #e5e7eb; }
+
+  .front { background: #f8fafc; border-left: 3px solid #4169E1; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .front h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #0f172a; }
+  .front div { font-size: 13px; color: #334155; }
+  .bar { height: 6px; background: #e5e7eb; border-radius: 999px; margin-top: 10px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; border-radius: 999px; background: #4169E1; }
+
+  .project { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 10px; }
+  .project summary { font-size: 14px; font-weight: 700; color: #0f172a; }
+  .project .details-body { margin-top: 10px; }
+
+  .risk { background: #fff1f2; border-left: 3px solid #e11d48; border: 1px solid #fecdd3; border-radius: 12px; padding: 14px 16px; margin-top: 4px; }
+  .risk h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #881337; }
+  .risk div { font-size: 13px; color: #4b5563; }
+
+  .suggestion-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .suggestion-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .suggestion-box ul { margin-left: 18px; }
+  .suggestion-box li { margin-bottom: 6px; font-size: 13.5px; color: #334155; line-height: 1.45; }
+
+  .goal-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .goal-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .checkpoint { background: #f8fafc; border-left: 3px solid #4169E1; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+  .checkpoint input[type="checkbox"] { margin-top: 3px; }
+  .checkpoint-content strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
+  .checkpoint-content p { font-size: 12px; color: #334155; line-height: 1.4; }
+  .checkpoint.done { border-left-color: #15803d; background: #f0fff4; }
+  .checkpoint.done .checkpoint-content strong { text-decoration: line-through; color: #14532d; }
+  .checkpoint.done .checkpoint-content p { text-decoration: line-through; color: #14532d; }
+
+  .content-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .content-board { grid-template-columns: 1fr; } }
+  .content-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .content-card h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+  .content-card .status { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+  .content-card .actions { display: flex; gap: 6px; }
+  .content-card .actions button { flex: 1; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .content-card .actions button:hover { background: #1e293b; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+  @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .stat-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 6px; }
+  .stat-box .value { font-size: 22px; font-weight: 700; color: #0f172a; }
 </style>
 </head>
 <body>
   <div class="page">
     <header>
-      <h1>Agenda Semanal</h1>
-      <p>Distribuição por frente e tempo por bloco.</p>
+      <h1>Painel Semanal</h1>
+      <p>Relatório + Agenda + Metas + CRM + Conteúdo em uma página.</p>
     </header>
 
-    <div class="section-title">Distribuição semanal</div>
-    <div class="focus-pills">
-      <span>EPQ: 30 min tráfego + 40 min evolução/dia</span>
-      <span>Pesquisa ecossistema: 2x na semana</span>
-      <span>Conteúdo: 2x na semana</span>
-      <span>Prospecção: 3x na semana</span>
-      <span>Portfolio/CRM: 2x na semana</span>
+    <div class="kpi">
+      <div class="item"><div class="label">Concluídas</div><div class="value green">8</div></div>
+      <div class="item"><div class="label">Pendentes</div><div class="value red">6</div></div>
+      <div class="item"><div class="label">Frentes ativas</div><div class="value blue">7</div></div>
+      <div class="item"><div class="label">Risco principal</div><div class="value amber">1</div></div>
     </div>
 
-    <div class="day">
-      <h2>Segunda</h2>
-      <div class="meta">Foco: Produto + EPQ + Prospecção</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Concluir ajustes de produto.html e validar mobile</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e ajustar campanhas</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: planejamento semanal do projeto EPQ</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc">Produto: revisar cases do EPQ em <a href="https://flavio-guedes.github.io/portfolio/produto.html" target="_blank">produto.html</a></div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: enviar 10 mensagens do Top 30 LinkedIn</div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Validar responsividade mobile</div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: validar integrações e ferramentas</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Atualizar <a href="https://flavio-guedes.github.io/portfolio/forecast.html" target="_blank">forecast.html</a></div></div>
+    <div class="tabs">
+      <button class="active" onclick="switchTab('report', this)">Relatório</button>
+      <button onclick="switchTab('agenda', this)">Agenda</button>
+      <button onclick="switchTab('goals', this)">Metas</button>
+      <button onclick="switchTab('crm', this)">CRM</button>
+      <button onclick="switchTab('content', this)">Conteúdo</button>
     </div>
 
-    <div class="day">
-      <h2>Terça</h2>
-      <div class="meta">Foco: Conteúdo + EPQ + Portfolio</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Ampliar prospecção e atualizar painel</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e otimizar anúncios</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: documentar ações e follow-ups</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc"><span class="highlight">Conteúdo</span>: roteiro e calendário editorial</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: atualizar <a href="https://flavio-guedes.github.io/portfolio/pipelkd.html" target="_blank">pipelkd.html</a></div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Portfolio: ajustar <a href="https://flavio-guedes.github.io/portfolio/designhead.html" target="_blank">designhead.html</a></div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: mapear novas integrações</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Validar <a href="https://flavio-guedes.github.io/portfolio/parceria.html" target="_blank">parceria.html</a></div></div>
+    <!-- RELATÓRIO -->
+    <div id="report" class="panel open">
+      <details open>
+        <summary>Portfolio</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('portfolio')">Download tarefas — Portfolio</button>
+          </div>
+          <details class="project" open>
+            <summary>Páginas foco</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p>Ajustes em <code>produto.html</code>, <code>parceria.html</code>, <code>designhead.html</code>. Remoção do LinkedIn do Flávio, cases do EPQ inseridos em <code>produto.html</code>.</p>
+              <h4>Problemas</h4><p>Apenas validação visual final de <code>designhead.html</code> pendente.</p>
+              <h4>Skills</h4><p>HTML/CSS avançado, Git/Web publishing, UI/UX Design.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de revisão visual executa.</p>
+              <h4>Resumo</h4><p>Portfolio alinhado às frentes definidas. Páginas foco prontas para uso.</p>
+              <h4>Sugestões</h4><ul><li>Validar <code>designhead.html</code> em diferentes dispositivos.</li><li>Adicionar cases recentes.</li></ul>
+            </div>
+          </details>
+          <details class="project">
+            <summary>Proposta e CV</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p><code>proposta_v3.html</code>, <code>proposta_padrao.html</code>, <code>cv-product-designer.html</code> e PDF gerados.</p>
+              <h4>Problemas</h4><p>Nenhum.</p>
+              <h4>Skills</h4><p>Copywriting comercial, Design editorial, PDF automation.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de conteúdo executa.</p>
+              <h4>Resumo</h4><p>Materiais prontos para envio e publicação.</p>
+              <h4>Sugestões</h4><ul><li>Criar versões por nicho.</li><li>Adicionar depoimentos/cases.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>LinkedIn Prospecção</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('linkedin')">Download tarefas — LinkedIn</button>
+          </div>
+          <details class="project">
+            <summary>Painel pipelkd.html</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p><code>pipelkd.html</code> criado e publicado com rolagem vertical clean, paginação 10 em 10, temperatura por lead e link direto para o perfil.</p>
+              <h4>Problemas</h4><p>Alguns contatos não abriam corretamente em versão anterior; ajustado após retroação.</p>
+              <h4>Skills</h4><p>Análise de dados CSV, JavaScript/HTML, Inteligência comercial.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de dados + agente de produto executam.</p>
+              <h4>Resumo</h4><p>Painel estável e publicado. Leads priorizados por score e temperatura.</p>
+              <h4>Sugestões</h4><ul><li>Adicionar filtros por temperatura e score.</li><li>Criar modo offline.</li></ul>
+            </div>
+          </details>
+          <details class="project">
+            <summary>Top 30 Leads</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p>Top 30 prospecção LinkedIn gerada e estruturada.</p>
+              <h4>Problemas</h4><p>Nenhum.</p>
+              <h4>Skills</h4><p>Análise de relacionamento, classificação de oportunidades.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de análise executa.</p>
+              <h4>Resumo</h4><p>Lista pronta para ação.</p>
+              <h4>Sugestões</h4><ul><li>Atualizar lista semanalmente.</li><li>Adicionar notas de follow-up.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>Email Prospecção</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('email')">Download tarefas — Email</button>
+          </div>
+          <details class="project">
+            <summary>Painel email.html</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p><code>email.html</code> criado com base em <code>leads_filtrados_2026-08-04.csv</code>, paginação 10 em 10.</p>
+              <h4>Problemas</h4><p>Dados iniciais limitados; planilha Google Sheets ainda não integrada.</p>
+              <h4>Skills</h4><p>CSV/JSON parsing, Frontend, Gestão de leads.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de dados + agente de produto executam.</p>
+              <h4>Resumo</h4><p>Painel funcional; dados parciais. Integração com Sheets pendente.</p>
+              <h4>Sugestões</h4><ul><li>Conectar com Google Sheets via API.</li><li>Adicionar status de follow-up automático.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>Gmail/CRM</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('gmail')">Download tarefas — Gmail/CRM</button>
+          </div>
+          <details class="project">
+            <summary>CRM do Gmail</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p>Estrutura iniciada. Acesso ao Gmail ainda não integrado ao painel.</p>
+              <h4>Problemas</h4><p>Autenticação e leitura automatizada pendentes.</p>
+              <h4>Skills</h4><p>Gmail API, Python, Automação.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de integração executa.</p>
+              <h4>Resumo</h4><p>Pendente de conexão segura.</p>
+              <h4>Sugestões</h4><ul><li>Implementar OAuth com fallback.</li><li>Sincronizar leads com painel.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>CRM/Drive</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('crm')">Download tarefas — CRM/Drive</button>
+          </div>
+          <details class="project">
+            <summary>Base local</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p>Base local criada com dados do Drive.</p>
+              <h4>Problemas</h4><p>Leitura automatizada do Drive indisponível. Dados precisam ser copiados para pasta local.</p>
+              <h4>Skills</h4><p>Integração Google Drive, Python, Automação.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de integração executa.</p>
+              <h4>Resumo</h4><p>Estrutura iniciada; acesso automatizado pendente.</p>
+              <h4>Sugestões</h4><ul><li>Usar API Google Drive com OAuth.</li><li>Agendar sincronização local periódica.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>EPQ/Forecast</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('epq')">Download tarefas — EPQ/Forecast</button>
+          </div>
+          <details class="project">
+            <summary>forecast.html</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p><code>forecast.html</code> criado e publicado com explicação didática da planilha, gráficos interativos e explorador por mês.</p>
+              <h4>Problemas</h4><p>Ajustes mobile pendentes para melhor experiência em telas pequenas.</p>
+              <h4>Skills</h4><p>Análise financeira, Visualização de dados, Educação/Didática.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de análise + agente de frontend executam.</p>
+              <h4>Resumo</h4><p>Conteúdo didático completo publicado. Experiência mobile pode melhorar.</p>
+              <h4>Sugestões</h4><ul><li>Refinar CSS para mobile.</li><li>Adicionar suporte a offline.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details>
+        <summary>Beni/Áudios</summary>
+        <div class="details-body">
+          <div class="download-bar">
+            <button onclick="downloadTasks('beni')">Download tarefas — Beni/Áudios</button>
+          </div>
+          <details class="project">
+            <summary>Áudios do Benício</summary>
+            <div class="details-body">
+              <h4>Evolução</h4><p>Textos preparados. Geração bloqueada por quota da ElevenLabs.</p>
+              <h4>Problemas</h4><p>Créditos insuficientes no provedor TTS.</p>
+              <h4>Skills</h4><p>TTS/Áudio, Conteúdo infantil, Storytelling.</p>
+              <h4>Agentes</h4><p>MASTER orquestra; agente de conteúdo executa.</p>
+              <h4>Resumo</h4><p>Aguardando liberação de quota ou provedor alternativo.</p>
+              <h4>Sugestões</h4><ul><li>Usar provedor gratuito como fallback.</li><li>Comprar créditos adicionais.</li></ul>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <div class="master-status">
+        <h2>Status do MASTER</h2>
+        <div class="status-line"><strong>Papel:</strong> orquestrador — define prioridades, delega para agentes especializados e valida entregas.</div>
+        <div class="status-line"><strong>Modo:</strong> looping contínuo de distribuição de tarefas.</div>
+        <div class="status-line"><strong>Foco atual:</strong> integrações definitivas para autonomia do ecossistema.</div>
+        <div class="status-line"><strong>Ações pendentes do usuário:</strong> habilitar GitHub Pages público; fornecer credenciais para autenticação.</div>
+      </div>
+
+      <div class="action-box">
+        <h2>Ações necessárias para autonomia</h2>
+        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Habilitar GitHub Pages</strong><p>Tornar o repositório público para acesso sem autenticação.</p></div></div>
+        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Fornecer credenciais de API</strong><p>Google Drive, Gmail e LinkedIn para integração automática.</p></div></div>
+        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Definir provedor TTS padrão</strong><p>Eliminar bloqueio por quota em áudios do Benício.</p></div></div>
+      </div>
+
+      <div class="integration-box">
+        <h2>Integrações definitivas</h2>
+        <div class="integration-item"><strong>Google Sheets</strong><p>Atualização automática dos painéis de prospecção.</p></div>
+        <div class="integration-item"><strong>Gmail API</strong><p>Sincronização de leads e follow-ups.</p></div>
+        <div class="integration-item"><strong>LinkedIn</strong><p>Atualização automática de conexões e mensagens.</p></div>
+        <div class="integration-item"><strong>GitHub Actions</strong><p>Deploy automático dos painéis.</p></div>
+      </div>
+
+      <div class="cycle">
+        <h2>Ciclos de aprimoramento</h2>
+        <ul>
+          <li><strong>Framework:</strong> SCAN → PRIORIZAÇÃO → DELEGAÇÃO → EXECUÇÃO → VALIDAÇÃO → DESTRAVAMENTO → REPORT.</li>
+          <li><strong>Papel do MASTER:</strong> orquestrador — define prioridades, delega para agentes especializados e valida entregas. O MASTER não executa tarefas operacionais.</li>
+          <li><strong>Status:</strong> ciclos ativos nas frentes Portfolio, LinkedIn, Email, CRM/Drive, EPQ/Forecast e Gmail/CRM.</li>
+          <li><strong>Ecossistema:</strong> 7 frentes, 10 projetos, 8 tarefas concluídas, 6 pendentes.</li>
+          <li><strong>Melhoria contínua:</strong> ajustes baseados em feedback, retrabalho reduzido e rituais de validação.</li>
+        </ul>
+      </div>
+
+      <div class="suggestion-box">
+        <h2>Sugestões globais por frente</h2>
+        <ul>
+          <li><strong>Portfolio:</strong> Padronizar tom e CTA em todas as páginas. Criar template reutilizável para novos cases.</li>
+          <li><strong>LinkedIn:</strong> Automatizar atualização da lista de leads. Integrar com CRM para follow-up.</li>
+          <li><strong>Email:</strong> Conectar com Google Sheets para atualização automática. Adicionar filtros e status.</li>
+          <li><strong>CRM/Drive:</strong> Implementar sincronização automática com API. Criar alertas para novos arquivos.</li>
+          <li><strong>Beni/áudios:</strong> Definir provedor TTS padrão com fallback. Criar biblioteca de áudios por tema.</li>
+          <li><strong>EPQ/Forecast:</strong> Finalizar mobile e adicionar modo offline. Criar versão white-label para clientes.</li>
+          <li><strong>Proposta/CV:</strong> Criar versões por segmento e idioma. Automatizar geração de PDF.</li>
+          <li><strong>Gmail/CRM:</strong> Finalizar autenticação e sincronização de leads com o painel.</li>
+        </ul>
+      </div>
+
+      <div class="suggestion-box">
+        <h2>Sugestões globais para o ecossistema</h2>
+        <ul>
+          <li>Criar um <strong>Integration Hub central</strong> para conectar todos os painéis e fontes de dados.</li>
+          <li>Adotar um <strong>layout unificado</strong> para todos os painéis do portfolio, garantindo consistência visual.</li>
+          <li>Implementar <strong>autenticação unificada</strong> para LinkedIn/Gmail, reduzindo bloqueios.</li>
+          <li>Criar um <strong>modo offline</strong> para painéis críticos, permitindo acesso sem internet.</li>
+          <li>Adicionar <strong>monitoramento automatizado</strong> de saúde dos painéis e fontes de dados.</li>
+          <li>Estabelecer <strong>convenções de nomenclatura</strong> e versionamento para todos os arquivos.</li>
+        </ul>
+      </div>
+
+      <div class="risk">
+        <h3>Risco principal</h3>
+        <div>Bloqueios externos de quota/autenticação podem atrasar integrações de dados em tempo real.</div>
+      </div>
     </div>
 
-    <div class="day">
-      <h2>Quarta</h2>
-      <div class="meta">Foco: Email + EPQ + Conteúdo</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Sincronizar leads e melhorar painel</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e ajustar orçamento</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: melhorar visualização mobile</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc"><span class="highlight">Conteúdo</span>: revisão de peças e publicação</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: integrar Google Sheets</div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Atualizar <a href="https://flavio-guedes.github.io/portfolio/email.html" target="_blank">email.html</a></div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: avaliar automações e APIs</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Criar follow-up automático</div></div>
+    <!-- AGENDA -->
+    <div id="agenda" class="panel">
+      <div class="day">
+        <h2>Segunda</h2>
+        <div class="meta">Foco: Produto + EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Concluir ajustes de produto.html e validar mobile</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">Produto: revisar cases do EPQ em <a href="https://flavio-guedes.github.io/portfolio/produto.html" target="_blank">produto.html</a></div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: planejamento semanal do projeto EPQ</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Validar responsividade mobile</div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: atualizar forecast.html</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Terça</h2>
+        <div class="meta">Foco: LinkedIn + EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Ampliar prospecção e atualizar painel</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">LinkedIn: enviar 10 mensagens do Top 30</div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: revisar pipeline de oportunidades</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Atualizar <a href="https://flavio-guedes.github.io/portfolio/pipelkd.html" target="_blank">pipelkd.html</a></div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: documentar ações e follow-ups</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Quarta</h2>
+        <div class="meta">Foco: Email + EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Sincronizar leads e melhorar painel</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">Email: integrar Google Sheets</div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: análise de métricas e ajustes no forecast</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Atualizar <a href="https://flavio-guedes.github.io/portfolio/email.html" target="_blank">email.html</a></div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: melhorar visualização mobile</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Quinta</h2>
+        <div class="meta">Foco: Portfolio + EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Publicar versão revisada do portfolio</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">Portfolio: ajustar <a href="https://flavio-guedes.github.io/portfolio/designhead.html" target="_blank">designhead.html</a></div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: preparar apresentação/reunião</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Validar <a href="https://flavio-guedes.github.io/portfolio/parceria.html" target="_blank">parceria.html</a> e remover links quebrados</div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: ajustar CSS responsivo</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Sexta</h2>
+        <div class="meta">Foco: CRM/Drive + EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Automatizar acesso e sincronização</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">CRM/Drive: implementar OAuth</div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: follow-up com leads quentes</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Sincronizar pasta local e testar leitura do Drive</div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: revisão semanal do projeto</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Sábado</h2>
+        <div class="meta">Foco: EPQ</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Melhorar mobile e criar white-label</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc"><span class="highlight">EPQ — Execução</span>: implementar ajustes mobile</div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: testar modo offline</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Criar versão white-label</div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc">Validar com usuário</div></div>
+      </div>
+
+      <div class="day">
+        <h2>Domingo</h2>
+        <div class="meta">Foco: Revisão</div>
+        <div class="goal"><strong>Meta do dia</strong><p>Revisão semanal e planejamento</p></div>
+        <div class="time-block"><div class="time">08:00 - 10:00</div><div class="time-desc">Revisar <a href="https://flavio-guedes.github.io/portfolio/relatorio.html" target="_blank">relatório</a></div></div>
+        <div class="time-block"><div class="time">10:00 - 12:00</div><div class="time-desc">Planejar próxima semana</div></div>
+        <div class="time-block"><div class="time">14:00 - 16:00</div><div class="time-desc">Backup dos arquivos</div></div>
+        <div class="time-block"><div class="time">16:00 - 18:00</div><div class="time-desc">Atualizar lembretes</div></div>
+      </div>
     </div>
 
-    <div class="day">
-      <h2>Quinta</h2>
-      <div class="meta">Foco: Portfolio + EPQ + CRM</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Publicar versão revisada do portfolio</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e novos anúncios</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: preparar apresentação/reunião</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: follow-up com leads quentes</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc">Portfolio: ajustar <a href="https://flavio-guedes.github.io/portfolio/designhead.html" target="_blank">designhead.html</a></div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Validar <a href="https://flavio-guedes.github.io/portfolio/parceria.html" target="_blank">parceria.html</a> e remover links quebrados</div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: revisar integrações pendentes</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">CRM: atualizar status de leads</div></div>
+    <!-- METAS -->
+    <div id="goals" class="panel">
+      <div class="goal-card">
+        <h2>Meta maior da semana</h2>
+        <p>Fechar contrato(s) de pelo menos R$ 4.000 esta semana.</p>
+        <div class="bar" style="margin-top:12px"><span style="width:0%"></span></div>
+        <p style="font-size:12px;color:#475569;margin-top:8px;">Progresso: <span id="goalProgress">R$ 0 / R$ 4.000</span></p>
+      </div>
+
+      <div class="goal-card">
+        <h2>Submetas por dia</h2>
+        <div class="goal-card" style="padding:0;border:none;box-shadow:none;background:transparent;">
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Segunda</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Enviar proposta para 2 leads qualificados até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Confirmar reunião com pelo menos 1 lead até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Terça</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Follow-up em 3 leads quentes do LinkedIn até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Registrar respostas e atualizar status até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Quarta</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Enviar follow-up para 2 leads frios até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Atualizar pipeline e registrar avanços até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Quinta</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Agendar 1 reunião comercial até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Enviar proposta personalizada para 1 lead até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Sexta</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Fechar pelo menos 1 contrato até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Confirmar valor total acumulado até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Sábado</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Follow-up pós-proposta para leads pendentes até 12h.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Registrar lições aprendidas e atualizar CRM até 18h.</p></div></div>
+          </div>
+          <div class="goal-card" style="margin-bottom:10px;">
+            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Domingo</h4>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Revisar resultado semanal vs meta de R$ 4.000.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Planejar ações da próxima semana.</p></div></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="day">
-      <h2>Sexta</h2>
-      <div class="meta">Foco: CRM/Drive + EPQ + Pesquisa</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Automatizar acesso e sincronização</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e ajustar targeting</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: revisão semanal do projeto</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc"><span class="highlight">Conteúdo</span>: planejamento para próxima semana</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: registrar respostas e atualizar status</div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">CRM/Drive: implementar OAuth</div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: avaliar novas integrações e ferramentas</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Sincronizar pasta local e testar leitura do Drive</div></div>
+    <!-- CRM -->
+    <div id="crm" class="panel">
+      <div class="sub-tabs">
+        <button class="active" onclick="switchSubTab('crm-pipeline', this)">Pipeline</button>
+        <button onclick="switchSubTab('crm-projetos', this)">Projetos</button>
+        <button onclick="switchSubTab('crm-leads', this)">Leads</button>
+        <button onclick="switchSubTab('crm-portfolio', this)">Portfolio</button>
+        <button onclick="switchSubTab('crm-clientes', this)">Clientes</button>
+        <button onclick="switchSubTab('crm-geral', this)">Geral</button>
+      </div>
+
+      <div id="crm-pipeline" class="sub-panel open">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Pesquisa</h3>
+            <div class="count">3 cartões</div>
+            <div class="card-item"><h4>Beatriz Huscher</h4><p>Bela Metais · Score 25 · LinkedIn</p></div>
+            <div class="card-item"><h4>Camila Castro</h4><p>DP Brasil · Score 28 · LinkedIn</p></div>
+            <div class="card-item"><h4>Paula Martins</h4><p>iFood · Score 31 · Email</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Backlog</h3>
+            <div class="count">3 cartões</div>
+            <div class="card-item"><h4>Marcelo Neves</h4><p>Enredo · Score 27 · LinkedIn</p></div>
+            <div class="card-item"><h4>Katelyn Halstead</h4><p>Score 35 · Email</p></div>
+            <div class="card-item"><h4>Alex Plunkett</h4><p>Score 35 · Email</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Fazendo</h3>
+            <div class="count">2 cartões</div>
+            <div class="card-item"><h4>Maíra Lucchese</h4><p>Orla Rio · Contato enviado</p></div>
+            <div class="card-item"><h4>Diana Rose Ariaso</h4><p>Untapped · Aguardando resposta</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Concluído</h3>
+            <div class="count">1 cartão</div>
+            <div class="card-item"><h4>Marcio Magalhães</h4><p>L'Oréal · Proposta enviada</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Follow-up</h3>
+            <div class="count">2 cartões</div>
+            <div class="card-item"><h4>Camila Friedrich</h4><p>Vyntha · Agradecer proposta</p></div>
+            <div class="card-item"><h4>Melissa Chapman</h4><p>Creative Circle · Confirmar interesse</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="crm-projetos" class="sub-panel">
+        <div class="stats-grid">
+          <div class="stat-box"><h4>Em andamento</h4><div class="value">5</div></div>
+          <div class="stat-box"><h4>Pausados</h4><div class="value">2</div></div>
+          <div class="stat-box"><h4>Entregues</h4><div class="value">3</div></div>
+        </div>
+        <details open>
+          <summary>Portfolio</summary>
+          <div class="details-body">
+            <h4>Ações</h4>
+            <ul>
+              <li>Ajustar <code>designhead.html</code></li>
+              <li>Validar <code>parceria.html</code></li>
+              <li>Remover links quebrados</li>
+            </ul>
+            <h4>Status</h4>
+            <p>Em andamento</p>
+          </div>
+        </details>
+        <details>
+          <summary>LinkedIn Prospecção</summary>
+          <div class="details-body">
+            <h4>Ações</h4>
+            <ul>
+              <li>Enviar 10 mensagens do Top 30</li>
+              <li>Atualizar <code>pipelkd.html</code></li>
+              <li>Registrar respostas</li>
+            </ul>
+            <h4>Status</h4>
+            <p>Em andamento</p>
+          </div>
+        </details>
+        <details>
+          <summary>EPQ/Forecast</summary>
+          <div class="details-body">
+            <h4>Ações</h4>
+            <ul>
+              <li>Refinar CSS para mobile</li>
+              <li>Adicionar suporte a offline</li>
+              <li>Criar white-label</li>
+            </ul>
+            <h4>Status</h4>
+            <p>Em andamento</p>
+          </div>
+        </details>
+      </div>
+
+      <div id="crm-leads" class="sub-panel">
+        <details open>
+          <summary>Top 10 LinkedIn</summary>
+          <div class="details-body">
+            <ul>
+              <li>Betina Cupello — Arco Educação</li>
+              <li>Ana Padinha — Studio Rx</li>
+              <li>Ana Luiza Amaral Baldacini — Kuaishou</li>
+              <li>Marcelo Neves — Enredo</li>
+              <li>Caio Lo Bianco — LIV</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Top 11-25 LinkedIn</summary>
+          <div class="details-body">
+            <ul>
+              <li>Elaine Carvalho — Binatural</li>
+              <li>Mariana Ruas — UnitedClass</li>
+              <li>Raquel Kiss — Compass UOL</li>
+              <li>Rodrigo Souza — Bradesco</li>
+              <li>Clever Braga — Cometa Gaming</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Top Email</summary>
+          <div class="details-body">
+            <ul>
+              <li>camilafriedrich@vyntha.com</li>
+              <li>accenture.application@outlook.com</li>
+              <li>roberthalf.screeningdesk@outlook.com</li>
+              <li>flavia_guima@yahoo.com.br</li>
+              <li>jessica.ramirez@sthreeco.com</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div id="crm-portfolio" class="sub-panel">
+        <details open>
+          <summary>Páginas foco</summary>
+          <div class="details-body">
+            <ul>
+              <li><code>produto.html</code></li>
+              <li><code>parceria.html</code></li>
+              <li><code>designhead.html</code></li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Proposta e CV</summary>
+          <div class="details-body">
+            <ul>
+              <li><code>proposta_v3.html</code></li>
+              <li><code>proposta_padrao.html</code></li>
+              <li><code>cv-product-designer.html</code></li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Painéis</summary>
+          <div class="details-body">
+            <ul>
+              <li><code>pipelkd.html</code></li>
+              <li><code>email.html</code></li>
+              <li><code>forecast.html</code></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div id="crm-clientes" class="sub-panel">
+        <details open>
+          <summary>EPQ</summary>
+          <div class="details-body">
+            <p>Projeto principal em andamento.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Projetos pessoais</summary>
+          <div class="details-body">
+            <p>Portfolio, prospecção e automações.</p>
+          </div>
+        </details>
+      </div>
+
+      <div id="crm-geral" class="sub-panel">
+        <details open>
+          <summary>Visão geral</summary>
+          <div class="details-body">
+            <ul>
+              <li>7 frentes ativas</li>
+              <li>10 projetos</li>
+              <li>8 tarefas concluídas</li>
+              <li>6 tarefas pendentes</li>
+              <li>1 risco principal</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Resumo por frente</summary>
+          <div class="details-body">
+            <ul>
+              <li>Portfolio: 70%</li>
+              <li>LinkedIn: 60%</li>
+              <li>Email: 40%</li>
+              <li>CRM/Drive: 30%</li>
+              <li>Beni/áudios: 0%</li>
+              <li>EPQ/Forecast: 90%</li>
+              <li>Proposta/CV: 100%</li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
 
-    <div class="day">
-      <h2>Sábado</h2>
-      <div class="meta">Foco: EPQ + Portfolio + Conteúdo</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Melhorar mobile e criar white-label</p></div>
-      <div class="time-block"><div class="time">08:00 - 08:30</div><div class="time-desc"><span class="highlight">EPQ — Tráfego</span>: checar métricas e otimizar criativos</div></div>
-      <div class="time-block"><div class="time">08:30 - 09:10</div><div class="time-desc"><span class="highlight">EPQ — Evolução</span>: testar modo offline</div></div>
-      <div class="time-block"><div class="time">09:10 - 10:00</div><div class="time-desc"><span class="highlight">Conteúdo</span>: revisar peças pendentes</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc">Portfolio: ajustar <a href="https://flavio-guedes.github.io/portfolio/designhead.html" target="_blank">designhead.html</a></div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Criar versão white-label</div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: mapear melhorias para o painel</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Validar com usuário</div></div>
+    <!-- CONTEÚDO -->
+    <div id="content" class="panel">
+      <div class="sub-tabs">
+        <button class="active" onclick="switchSubTab('content-planejamento', this)">Planejamento</button>
+        <button onclick="switchSubTab('content-producao', this)">Produção</button>
+        <button onclick="switchSubTab('content-distribuicao', this)">Distribuição</button>
+        <button onclick="switchSubTab('content-analytics', this)">Analytics</button>
+      </div>
+
+      <div id="content-planejamento" class="sub-panel open">
+        <div class="content-board">
+          <div class="content-card">
+            <h3>Calendário editorial</h3>
+            <div class="status">Próxima publicação: 30/08</div>
+            <div class="actions"><button>Editar</button><button>Adicionar</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Linhas editoriais</h3>
+            <div class="status">3 ativas</div>
+            <div class="actions"><button>Editar</button><button>Nova</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Temas da semana</h3>
+            <div class="status">5 temas</div>
+            <div class="actions"><button>Editar</button><button>Sugerir</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-producao" class="sub-panel">
+        <div class="content-board">
+          <div class="content-card">
+            <h3>Roteiros</h3>
+            <div class="status">2 em produção</div>
+            <div class="actions"><button>Editar</button><button>Novo</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Artigos</h3>
+            <div class="status">1 rascunho</div>
+            <div class="actions"><button>Editar</button><button>Publicar</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Design</h3>
+            <div class="status">3 peças</div>
+            <div class="actions"><button>Editar</button><button>Criar</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-distribuicao" class="sub-panel">
+        <div class="content-board">
+          <div class="content-card">
+            <h3>Redes sociais</h3>
+            <div class="status">Agendado: 2 posts</div>
+            <div class="actions"><button>Agendar</button><button>Publicar</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Newsletter</h3>
+            <div class="status">Próxima edição: 01/09</div>
+            <div class="actions"><button>Editar</button><button>Enviar</button></div>
+          </div>
+          <div class="content-card">
+            <h3>Site/Blog</h3>
+            <div class="status">3 publicados</div>
+            <div class="actions"><button>Editar</button><button>Novo</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-analytics" class="sub-panel">
+        <div class="stats-grid">
+          <div class="stat-box"><h4>Alcance</h4><div class="value">12.4K</div></div>
+          <div class="stat-box"><h4>Engajamento</h4><div class="value">8.2%</div></div>
+          <div class="stat-box"><h4>Conversões</h4><div class="value">34</div></div>
+        </div>
+        <div class="action-box">
+          <h2>Insights</h2>
+          <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Melhor horário</strong><p>Publicar entre 18h e 20h para maior engajamento.</p></div></div>
+          <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Tema em alta</strong><p>Aumentar conteúdo sobre produtividade e IA.</p></div></div>
+        </div>
+      </div>
     </div>
 
-    <div class="day">
-      <h2>Domingo</h2>
-      <div class="meta">Foco: Revisão + Pesquisa</div>
-      <div class="goal"><strong>Meta do dia</strong><p>Revisão semanal e planejamento</p></div>
-      <div class="time-block"><div class="time">08:00 - 09:00</div><div class="time-desc">Revisar <a href="https://flavio-guedes.github.io/portfolio/relatorio.html" target="_blank">relatório</a> e resultados da semana</div></div>
-      <div class="time-block"><div class="time">09:00 - 10:00</div><div class="time-desc"><span class="highlight">Pesquisa ecossistema</span>: definir prioridades para próxima semana</div></div>
-      <div class="time-block"><div class="time">10:00 - 11:00</div><div class="time-desc">Planejar próxima semana</div></div>
-      <div class="time-block"><div class="time">14:00 - 15:00</div><div class="time-desc">Backup dos arquivos</div></div>
-      <div class="time-block"><div class="time">15:00 - 16:00</div><div class="time-desc"><span class="highlight">Prospecção</span>: organizar Top 30 e follow-ups</div></div>
-      <div class="time-block"><div class="time">16:00 - 17:00</div><div class="time-desc">Atualizar lembretes</div></div>
+    <div class="risk">
+      <h3>Risco principal</h3>
+      <div>Bloqueios externos de quota/autenticação podem atrasar integrações de dados em tempo real.</div>
     </div>
   </div>
+
+  <script>
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('open'));
+      document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+      document.getElementById(tab).classList.add('open');
+      btn.classList.add('active');
+    }
+    function switchSubTab(tab, btn) {
+      const parent = btn.closest('.panel');
+      parent.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('open'));
+      parent.querySelectorAll('.sub-tabs button').forEach(b => b.classList.remove('active'));
+      document.getElementById(tab).classList.add('open');
+      btn.classList.add('active');
+    }
+    function toggleCheckpoint(checkbox) {
+      const cp = checkbox.closest('.checkpoint');
+      if (checkbox.checked) {
+        cp.classList.add('done');
+      } else {
+        cp.classList.remove('done');
+      }
+    }
+    function toggleAction(checkbox) {
+      const item = checkbox.closest('.action-item');
+      if (checkbox.checked) {
+        item.classList.add('done');
+      } else {
+        item.classList.remove('done');
+      }
+    }
+    function downloadTasks(front){
+      const map = {
+        portfolio: ['Páginas foco','Proposta e CV'],
+        linkedin: ['Painel pipelkd.html','Top 30 Leads'],
+        email: ['Painel email.html'],
+        crm: ['Base local'],
+        epq: ['forecast.html'],
+        beni: ['Áudios do Benício'],
+        gmail: ['CRM do Gmail']
+      };
+      const projects = map[front] || [];
+      let text = `Tarefas - ${front}\n\n`;
+      projects.forEach(p => { text += `- ${p}\n`; });
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tarefas-${front}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
