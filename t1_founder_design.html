@@ -230,8 +230,25 @@ function setFilter(f, btn) {
 function updateProgress() {
   const done = leads.filter(l => l.status === 'encerrado' || l.status === 'descarte').length;
   const pct = leads.length ? (done / leads.length) * 100 : 0;
+  const byStatus = {};
+  leads.forEach(l => { const s = l.status || 'pendente'; byStatus[s] = (byStatus[s]||0)+1; });
+  const counts = STATUS_OPTIONS.map(s => `${s}: ${byStatus[s]||0}`).join('  ·  ');
   document.getElementById('prog-fill').style.width = pct + '%';
   document.getElementById('prog-count').textContent = `${done} / ${leads.length}`;
+  document.getElementById('pill-count').textContent = counts;
+}
+function saveState() {
+  const state = {};
+  leads.forEach(l => { if (l.status) state[l.id] = l.status; });
+  try { localStorage.setItem('t1_founder_status', JSON.stringify(state)); } catch {}
+}
+function loadState() {
+  try {
+    const raw = localStorage.getItem('t1_founder_status');
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    leads.forEach(l => { if (state[l.id]) l.status = state[l.id]; });
+  } catch {}
 }
 function renderList() {
   const list = document.getElementById('lead-list');
@@ -244,6 +261,8 @@ function renderList() {
     if (l.linkedin) actions.push(`<a href="${l.linkedin}" target="_blank" class="contact-chip chip-li">LinkedIn</a>`);
     if (l.wa) actions.push(`<a href="https://wa.me/${l.wa.replace(/\\D/g,'')}" target="_blank" class="contact-chip chip-wa">WhatsApp</a>`);
     if (l.email) actions.push(`<a href="mailto:${l.email}" class="contact-chip chip-email">Email</a>`);
+    const stepIdx = typeof activeStep !== 'undefined' ? activeStep : 0;
+    const copyInline = `<button class="status-btn" onclick="event.stopPropagation(); copyMsg(${l.id})">Copiar msg</button>`;
     return `<div class="lead-card ${status==='encerrado'||status==='descarte'?'done':''} ${activeId===l.id?'active':''}" onclick="selectLead(${l.id})">
       <div class="lead-name">${l.nome}</div>
       <div class="lead-empresa">${l.empresa || ''}</div>
@@ -252,6 +271,7 @@ function renderList() {
         <select class="status-select" onchange="event.stopPropagation(); setStatus(${l.id}, this.value)">${statusOptions}</select>
       </div>
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${actions.join('')}</div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${copyInline}</div>
     </div>`;
   }).join('');
 }
@@ -270,6 +290,7 @@ function setStatus(id, status) {
   if (l) {
     l.status = status;
     updateProgress();
+    saveState();
     renderList();
     renderDetail();
   }
