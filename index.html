@@ -30,68 +30,6 @@
   .panel { display: none; }
   .panel.open { display: block; }
 
-  .day { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
-  .day h2 { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
-  .day .meta { font-size: 12px; color: #64748b; margin-bottom: 10px; }
-  .day ul { margin-left: 18px; }
-  .day li { font-size: 13px; color: #334155; margin-bottom: 6px; line-height: 1.4; }
-  .day .goal { background: #f8fafc; border-left: 3px solid #4169E1; padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; }
-  .day .goal strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
-  .day .goal p { font-size: 12px; color: #334155; line-height: 1.4; }
-  .day a { color: #4169E1; text-decoration: none; font-size: 12px; }
-  .day a:hover { text-decoration: underline; }
-
-  .time-block { display: flex; gap: 12px; margin-bottom: 6px; align-items: baseline; }
-  .time { font-size: 12px; font-weight: 700; color: #0f172a; min-width: 110px; }
-  .time-desc { font-size: 13px; color: #334155; }
-  .highlight { color: #4169E1; font-weight: 700; }
-
-  .sub-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-  .sub-tabs button { padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e5e7eb; color: #334155; background: #ffffff; cursor: pointer; }
-  .sub-tabs button:hover { background: #f1f5f9; }
-  .sub-tabs button.active { background: #0f172a; border-color: #0f172a; color: #ffffff; }
-
-  .sub-panel { display: none; }
-  .sub-panel.open { display: block; }
-
-  .crm-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-  @media (max-width: 900px) { .crm-board { grid-template-columns: 1fr; } }
-  .crm-column { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-  .crm-column h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 10px; text-align: center; }
-  .crm-column .count { font-size: 12px; color: #64748b; text-align: center; margin-bottom: 10px; }
-  .crm-column .card-item { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 8px; }
-  .crm-column .card-item h4 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-  .crm-column .card-item p { font-size: 12px; color: #475569; line-height: 1.3; }
-  .crm-column .actions { display: flex; gap: 6px; margin-top: 6px; }
-  .crm-column .actions button { flex: 1; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
-  .crm-column .actions button:hover { background: #1e293b; }
-
-  .action-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
-  .action-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
-  .action-box .action-item { background: #f8fafc; border-left: 3px solid #4169E1; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
-  .action-box .action-item input[type="checkbox"] { margin-top: 3px; }
-  .action-box .action-item-content strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
-  .action-box .action-item-content p { font-size: 12px; color: #334155; line-height: 1.4; }
-  .action-box .action-item.done { border-left-color: #15803d; background: #f0fff4; }
-  .action-box .action-item.done .action-item-content strong { text-decoration: line-through; color: #14532d; }
-  .action-box .action-item.done .action-item-content p { text-decoration: line-through; color: #14532d; }
-
-  .integration-box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
-  .integration-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
-  .integration-item { background: #f8fafc; border-left: 3px solid #b45309; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
-  .integration-item strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
-  .integration-item p { font-size: 12px; color: #334155; line-height: 1.4; }
-  .integration-item.done { border-left-color: #15803d; background: #f0fff4; }
-
-  .master-status { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
-  .master-status h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
-  .master-status .status-line { font-size: 13px; color: #334155; margin-bottom: 6px; }
-  .master-status .status-line strong { color: #0f172a; }
-
-  .download-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-  .download-bar button { padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
-  .download-bar button:hover { background: #1e293b; }
-
   details { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
   summary { font-size: 15px; font-weight: 700; color: #0f172a; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
   summary::after { content: '+'; font-size: 18px; color: #4169E1; }
@@ -113,6 +51,22 @@
   .project summary { font-size: 14px; font-weight: 700; color: #0f172a; }
   .project .details-body { margin-top: 10px; }
 
+  .day { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .day h2 { font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+  .day .meta { font-size: 12px; color: #64748b; margin-bottom: 10px; }
+  .day ul { margin-left: 18px; }
+  .day li { font-size: 13px; color: #334155; margin-bottom: 6px; line-height: 1.4; }
+  .day .goal { background: #f8fafc; border-left: 3px solid #4169E1; padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; }
+  .day .goal strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
+  .day .goal p { font-size: 12px; color: #334155; line-height: 1.4; }
+  .day a { color: #4169E1; text-decoration: none; font-size: 12px; }
+  .day a:hover { text-decoration: underline; }
+
+  .time-block { display: flex; gap: 12px; margin-bottom: 6px; align-items: baseline; }
+  .time { font-size: 12px; font-weight: 700; color: #0f172a; min-width: 110px; }
+  .time-desc { font-size: 13px; color: #334155; }
+  .highlight { color: #4169E1; font-weight: 700; }
+
   .risk { background: #fff1f2; border-left: 3px solid #e11d48; border: 1px solid #fecdd3; border-radius: 12px; padding: 14px 16px; margin-top: 4px; }
   .risk h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #881337; }
   .risk div { font-size: 13px; color: #4b5563; }
@@ -121,6 +75,15 @@
   .suggestion-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
   .suggestion-box ul { margin-left: 18px; }
   .suggestion-box li { margin-bottom: 6px; font-size: 13.5px; color: #334155; line-height: 1.45; }
+
+  .download-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .download-bar button { padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .download-bar button:hover { background: #1e293b; }
+
+  .cycle { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .cycle h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+  .cycle ul { margin-left: 18px; }
+  .cycle li { margin-bottom: 6px; font-size: 13.5px; color: #334155; }
 
   .goal-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
   .goal-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #0f172a; }
@@ -132,14 +95,25 @@
   .checkpoint.done .checkpoint-content strong { text-decoration: line-through; color: #14532d; }
   .checkpoint.done .checkpoint-content p { text-decoration: line-through; color: #14532d; }
 
-  .content-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  @media (max-width: 900px) { .content-board { grid-template-columns: 1fr; } }
-  .content-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-  .content-card h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
-  .content-card .status { font-size: 12px; color: #64748b; margin-bottom: 8px; }
-  .content-card .actions { display: flex; gap: 6px; }
-  .content-card .actions button { flex: 1; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
-  .content-card .actions button:hover { background: #1e293b; }
+  .sub-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .sub-tabs button { padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #e5e7eb; color: #334155; background: #ffffff; cursor: pointer; }
+  .sub-tabs button:hover { background: #f1f5f9; }
+  .sub-tabs button.active { background: #0f172a; border-color: #0f172a; color: #ffffff; }
+
+  .sub-panel { display: none; }
+  .sub-panel.open { display: block; }
+
+  .crm-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .crm-board { grid-template-columns: 1fr; } }
+  .crm-column { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .crm-column h3 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 10px; text-align: center; }
+  .crm-column .count { font-size: 12px; color: #64748b; text-align: center; margin-bottom: 10px; }
+  .crm-column .card-item { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+  .crm-column .card-item h4 { font-size: 13px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+  .crm-column .card-item p { font-size: 12px; color: #475569; line-height: 1.3; }
+  .crm-column .actions { display: flex; gap: 6px; margin-top: 6px; }
+  .crm-column .actions button { flex: 1; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; cursor: pointer; }
+  .crm-column .actions button:hover { background: #1e293b; }
 
   .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
   @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
@@ -152,7 +126,7 @@
   <div class="page">
     <header>
       <h1>Painel Semanal</h1>
-      <p>Relatório + Agenda + Metas + CRM + Conteúdo em uma página.</p>
+      <p>Relatório + Agenda + Metas + CRM em uma página.</p>
     </header>
 
     <div class="kpi">
@@ -167,7 +141,6 @@
       <button onclick="switchTab('agenda', this)">Agenda</button>
       <button onclick="switchTab('goals', this)">Metas</button>
       <button onclick="switchTab('crm', this)">CRM</button>
-      <button onclick="switchTab('content', this)">Conteúdo</button>
     </div>
 
     <!-- RELATÓRIO -->
@@ -333,29 +306,6 @@
           </details>
         </div>
       </details>
-
-      <div class="master-status">
-        <h2>Status do MASTER</h2>
-        <div class="status-line"><strong>Papel:</strong> orquestrador — define prioridades, delega para agentes especializados e valida entregas.</div>
-        <div class="status-line"><strong>Modo:</strong> looping contínuo de distribuição de tarefas.</div>
-        <div class="status-line"><strong>Foco atual:</strong> integrações definitivas para autonomia do ecossistema.</div>
-        <div class="status-line"><strong>Ações pendentes do usuário:</strong> habilitar GitHub Pages público; fornecer credenciais para autenticação.</div>
-      </div>
-
-      <div class="action-box">
-        <h2>Ações necessárias para autonomia</h2>
-        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Habilitar GitHub Pages</strong><p>Tornar o repositório público para acesso sem autenticação.</p></div></div>
-        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Fornecer credenciais de API</strong><p>Google Drive, Gmail e LinkedIn para integração automática.</p></div></div>
-        <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Definir provedor TTS padrão</strong><p>Eliminar bloqueio por quota em áudios do Benício.</p></div></div>
-      </div>
-
-      <div class="integration-box">
-        <h2>Integrações definitivas</h2>
-        <div class="integration-item"><strong>Google Sheets</strong><p>Atualização automática dos painéis de prospecção.</p></div>
-        <div class="integration-item"><strong>Gmail API</strong><p>Sincronização de leads e follow-ups.</p></div>
-        <div class="integration-item"><strong>LinkedIn</strong><p>Atualização automática de conexões e mensagens.</p></div>
-        <div class="integration-item"><strong>GitHub Actions</strong><p>Deploy automático dos painéis.</p></div>
-      </div>
 
       <div class="cycle">
         <h2>Ciclos de aprimoramento</h2>
@@ -735,89 +685,6 @@
       </div>
     </div>
 
-    <!-- CONTEÚDO -->
-    <div id="content" class="panel">
-      <div class="sub-tabs">
-        <button class="active" onclick="switchSubTab('content-planejamento', this)">Planejamento</button>
-        <button onclick="switchSubTab('content-producao', this)">Produção</button>
-        <button onclick="switchSubTab('content-distribuicao', this)">Distribuição</button>
-        <button onclick="switchSubTab('content-analytics', this)">Analytics</button>
-      </div>
-
-      <div id="content-planejamento" class="sub-panel open">
-        <div class="content-board">
-          <div class="content-card">
-            <h3>Calendário editorial</h3>
-            <div class="status">Próxima publicação: 30/08</div>
-            <div class="actions"><button>Editar</button><button>Adicionar</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Linhas editoriais</h3>
-            <div class="status">3 ativas</div>
-            <div class="actions"><button>Editar</button><button>Nova</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Temas da semana</h3>
-            <div class="status">5 temas</div>
-            <div class="actions"><button>Editar</button><button>Sugerir</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="content-producao" class="sub-panel">
-        <div class="content-board">
-          <div class="content-card">
-            <h3>Roteiros</h3>
-            <div class="status">2 em produção</div>
-            <div class="actions"><button>Editar</button><button>Novo</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Artigos</h3>
-            <div class="status">1 rascunho</div>
-            <div class="actions"><button>Editar</button><button>Publicar</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Design</h3>
-            <div class="status">3 peças</div>
-            <div class="actions"><button>Editar</button><button>Criar</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="content-distribuicao" class="sub-panel">
-        <div class="content-board">
-          <div class="content-card">
-            <h3>Redes sociais</h3>
-            <div class="status">Agendado: 2 posts</div>
-            <div class="actions"><button>Agendar</button><button>Publicar</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Newsletter</h3>
-            <div class="status">Próxima edição: 01/09</div>
-            <div class="actions"><button>Editar</button><button>Enviar</button></div>
-          </div>
-          <div class="content-card">
-            <h3>Site/Blog</h3>
-            <div class="status">3 publicados</div>
-            <div class="actions"><button>Editar</button><button>Novo</button></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="content-analytics" class="sub-panel">
-        <div class="stats-grid">
-          <div class="stat-box"><h4>Alcance</h4><div class="value">12.4K</div></div>
-          <div class="stat-box"><h4>Engajamento</h4><div class="value">8.2%</div></div>
-          <div class="stat-box"><h4>Conversões</h4><div class="value">34</div></div>
-        </div>
-        <div class="action-box">
-          <h2>Insights</h2>
-          <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Melhor horário</strong><p>Publicar entre 18h e 20h para maior engajamento.</p></div></div>
-          <div class="action-item"><input type="checkbox" onchange="toggleAction(this)"><div class="action-item-content"><strong>Tema em alta</strong><p>Aumentar conteúdo sobre produtividade e IA.</p></div></div>
-        </div>
-      </div>
-    </div>
-
     <div class="risk">
       <h3>Risco principal</h3>
       <div>Bloqueios externos de quota/autenticação podem atrasar integrações de dados em tempo real.</div>
@@ -844,14 +711,6 @@
         cp.classList.add('done');
       } else {
         cp.classList.remove('done');
-      }
-    }
-    function toggleAction(checkbox) {
-      const item = checkbox.closest('.action-item');
-      if (checkbox.checked) {
-        item.classList.add('done');
-      } else {
-        item.classList.remove('done');
       }
     }
     function downloadTasks(front){
