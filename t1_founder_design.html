@@ -224,18 +224,18 @@ function updateProgress() {
 function renderList() {
   const list = document.getElementById('lead-list');
   const visible = leads.filter(l => filter === 'all' ? true : l.status === filter);
+  const statuses = ["pendente","respondido","em andamento","encerrado","descarte"];
   list.innerHTML = visible.map(l => {
     const status = l.status || 'pendente';
+    const buttons = statuses.map(s => {
+      const label = s === 'em andamento' ? 'em andamento' : s;
+      return `<button class="status-btn ${status===s?'active':''}" onclick="event.stopPropagation(); setStatus(${l.id}, '${s}')">${label}</button>`;
+    }).join('');
     return `<div class="lead-card ${status==='encerrado'||status==='descarte'?'done':''} ${activeId===l.id?'active':''}" onclick="selectLead(${l.id})">
       <div class="lead-name">${l.nome}</div>
       <div class="lead-empresa">${l.empresa || ''}</div>
       <div class="lead-cargo">${l.cargo || ''}</div>
-      <div>
-        <span class="tag tag-email">✉</span>
-        <span class="tag tag-wa">💬</span>
-        <span class="tag tag-li">in</span>
-        <span class="tag" style="background:#222;color:var(--text-muted)">${l.angle_label || ''}</span>
-      </div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${buttons}</div>
     </div>`;
   }).join('');
 }
