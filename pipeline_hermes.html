@@ -194,6 +194,7 @@
       <button onclick="switchTab('goals', this)">Metas</button>
       <button onclick="switchTab('pipeline', this)">Pipeline</button>
       <button onclick="switchTab('content', this)">Conteúdo</button>
+      <button onclick="switchTab('team', this)">Equipe</button>
     </div>
 
     <!-- RELATÓRIO -->
@@ -551,8 +552,8 @@
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
             <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Domingo</h4>
-            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Revisar resultado semanal vs meta de R$ 4.000.</p><p style="margin-top:4px;color:var(--text-muted);">Sugestão: comparar valor fechado com meta; identificar dias com mais conversão; anotar ajustes para próxima semana.</p></div></div>
-            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Planejar ações da próxima semana.</p><p style="margin-top:4px;color:var(--text-muted);">Sugestão: definir 3 metas principais; distribuir blocos por frente; atualizar checklist semanal.</p></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Revisar resultado semanal vs meta de R$ 4.000.</p><p style="margin-top:4px;color:var(--text-muted);">Sugestão: comparar valor fechado com meta; identificar dias com mais conversão; anotar ajustes para próxima semana.</p><details class="checklist-dropdown"><summary>Checklist da tarefa</summary><ul><li>Abrir goalProgress</li><li>Comparar valor fechado</li><li>Identificar melhores dias</li><li>Anotar ajustes</li><li>Registrar no relatório</li></ul></details></div></div>
+            <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Planejar ações da próxima semana.</p><p style="margin-top:4px;color:var(--text-muted);">Sugestão: definir 3 metas principais; distribuir blocos por frente; atualizar checklist semanal.</p><details class="checklist-dropdown"><summary>Checklist da tarefa</summary><ul><li>Definir 3 metas</li><li>Distribuir blocos por frente</li><li>Atualizar checklist</li><li>Revisar agenda</li><li>Salvar planejamento</li></ul></details></div></div>
           </div>
         </div>
       </div>
