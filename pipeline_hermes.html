@@ -5,68 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pipeline Hermes</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
   :root {
-    --neon-cyan: #00f0ff;
-    --neon-magenta: #ff00a0;
-    --neon-yellow: #faff00;
-    --dark-bg: #05080f;
-    --glass-bg: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.12);
+    --blue-900: #0b1d3a;
+    --blue-800: #12305e;
+    --blue-700: #1a3f7a;
+    --blue-600: #4169E1;
+    --blue-500: #5b8def;
+    --blue-400: #7aa8ff;
+    --blue-300: #a3c4ff;
+    --blue-200: #cfe3ff;
+    --blue-100: #e8f1ff;
+    --blue-50:  #f6f9ff;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --surface: #ffffff;
+    --border: #e5e7eb;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--dark-bg);
-    color: #e6f1ff;
+    background: linear-gradient(180deg, #f8faff 0%, #eef2ff 100%);
+    color: var(--text-primary);
     font-family: 'Inter', system-ui, sans-serif;
     padding: 0;
-    position: relative;
     min-height: 100vh;
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.07;
-    mix-blend-mode: screen;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .page { max-width: 1200px; margin: 0 auto; padding: 28px 22px 60px; position: relative; z-index: 1; }
-
+  .page { max-width: 1200px; margin: 0 auto; padding: 28px 22px 60px; }
   header { margin-bottom: 22px; }
-  header h1 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    font-family: 'Orbitron', sans-serif;
-    color: var(--neon-cyan);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
-  }
-  header p { color: #8aa3c9; font-size: 14px; margin-top: 6px; }
+  header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; color: var(--blue-900); }
+  header p { color: var(--text-muted); font-size: 14px; margin-top: 6px; }
 
   .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
   @media (max-width: 720px) { .kpi { grid-template-columns: repeat(2, 1fr); } }
-  .kpi .item {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 14px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
-  }
-  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #8aa3c9; margin-bottom: 6px; }
-  .kpi .value { font-size: 22px; font-weight: 700; color: #e6f1ff; }
-  .kpi .value.red { color: #ff2d78; }
-  .kpi .value.blue { color: var(--neon-cyan); }
-  .kpi .value.green { color: #39ff14; }
-  .kpi .value.amber { color: var(--neon-yellow); }
+  .kpi .item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .kpi .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+  .kpi .value { font-size: 22px; font-weight: 700; color: var(--blue-900); }
+  .kpi .value.red { color: #e11d48; }
+  .kpi .value.blue { color: var(--blue-600); }
+  .kpi .value.green { color: #15803d; }
+  .kpi .value.amber { color: #b45309; }
 
   .tabs {
     display: flex;
@@ -81,215 +63,108 @@
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
-    border: 1px solid var(--glass-border);
-    color: #cfe3ff;
-    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    background: var(--surface);
     cursor: pointer;
     white-space: nowrap;
-    backdrop-filter: blur(10px);
   }
-  .tabs button:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255,255,255,0.25); }
-  .tabs button.active {
-    background: rgba(0, 240, 255, 0.15);
-    border-color: var(--neon-cyan);
-    color: #e6ffff;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
-  }
+  .tabs button:hover { background: var(--blue-50); border-color: var(--blue-300); }
+  .tabs button.active { background: var(--blue-600); border-color: var(--blue-600); color: #ffffff; }
 
   .panel { display: none; }
   .panel.open { display: block; }
 
-  details {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 16px;
-    backdrop-filter: blur(14px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-    margin-bottom: 12px;
-  }
-  summary {
-    font-size: 15px;
-    font-weight: 700;
-    color: #e6f1ff;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  summary::after { content: '+'; font-size: 18px; color: var(--neon-cyan); }
+  details { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  summary { font-size: 15px; font-weight: 700; color: var(--blue-900); cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  summary::after { content: '+'; font-size: 18px; color: var(--blue-600); }
   details[open] summary::after { content: '-'; }
   .details-body { margin-top: 12px; }
-  .details-body h4 { font-size: 13px; font-weight: 700; color: #e6f1ff; margin-top: 10px; margin-bottom: 4px; }
-  .details-body p, .details-body li { font-size: 13.5px; color: #b8c9e4; line-height: 1.45; }
+  .details-body h4 { font-size: 13px; font-weight: 700; color: var(--blue-900); margin-top: 10px; margin-bottom: 4px; }
+  .details-body p, .details-body li { font-size: 13.5px; color: var(--text-secondary); line-height: 1.45; }
   .details-body ul { margin-left: 18px; }
   .details-body li { margin-bottom: 6px; }
-  code { background: rgba(255,255,255,0.08); padding: 2px 7px; border-radius: 7px; font-size: 12px; color: #ffe08a; border: 1px solid var(--glass-border); }
+  code { background: var(--blue-50); padding: 2px 7px; border-radius: 7px; font-size: 12px; color: var(--blue-800); border: 1px solid var(--border); }
 
-  .front { background: rgba(255,255,255,0.04); border-left: 3px solid var(--neon-cyan); border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; backdrop-filter: blur(8px); }
-  .front h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #e6f1ff; }
-  .front div { font-size: 13px; color: #b8c9e4; }
-  .bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 999px; margin-top: 10px; overflow: hidden; }
-  .bar > span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta)); }
+  .front { background: var(--blue-50); border-left: 3px solid var(--blue-600); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .front h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--blue-900); }
+  .front div { font-size: 13px; color: var(--text-secondary); }
+  .bar { height: 6px; background: var(--border); border-radius: 999px; margin-top: 10px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; border-radius: 999px; background: var(--blue-600); }
 
-  .project {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 14px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.04);
-    margin-bottom: 10px;
-  }
-  .project summary { font-size: 14px; font-weight: 700; color: #e6f1ff; }
+  .project { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 10px; }
+  .project summary { font-size: 14px; font-weight: 700; color: var(--blue-900); }
   .project .details-body { margin-top: 10px; }
 
-  .day {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.04);
-    margin-bottom: 12px;
-  }
-  .day h2 { font-size: 15px; font-weight: 700; color: #e6f1ff; margin-bottom: 6px; }
-  .day .meta { font-size: 12px; color: #8aa3c9; margin-bottom: 10px; }
+  .day { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .day h2 { font-size: 15px; font-weight: 700; color: var(--blue-900); margin-bottom: 6px; }
+  .day .meta { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
   .day ul { margin-left: 18px; }
-  .day li { font-size: 13px; color: #b8c9e4; margin-bottom: 6px; line-height: 1.4; }
-  .day .goal { background: rgba(255,255,255,0.04); border-left: 3px solid var(--neon-magenta); padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; backdrop-filter: blur(8px); }
-  .day .goal strong { font-size: 12px; font-weight: 700; color: #ffe08a; display: block; margin-bottom: 2px; }
-  .day .goal p { font-size: 12px; color: #b8c9e4; line-height: 1.4; }
-  .day a { color: var(--neon-cyan); text-decoration: none; font-size: 12px; }
+  .day li { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; line-height: 1.4; }
+  .day .goal { background: var(--blue-50); border-left: 3px solid var(--blue-600); padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; }
+  .day .goal strong { font-size: 12px; font-weight: 700; color: var(--blue-900); display: block; margin-bottom: 2px; }
+  .day .goal p { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+  .day a { color: var(--blue-600); text-decoration: none; font-size: 12px; }
   .day a:hover { text-decoration: underline; }
 
   .time-block { display: flex; gap: 12px; margin-bottom: 6px; align-items: baseline; }
-  .time { font-size: 12px; font-weight: 700; color: #ffe08a; min-width: 110px; }
-  .time-desc { font-size: 13px; color: #b8c9e4; }
-  .highlight { color: var(--neon-cyan); font-weight: 700; }
+  .time { font-size: 12px; font-weight: 700; color: var(--blue-800); min-width: 110px; }
+  .time-desc { font-size: 13px; color: var(--text-secondary); }
+  .highlight { color: var(--blue-600); font-weight: 700; }
 
-  .risk { background: rgba(255,45,120,0.08); border-left: 3px solid #ff2d78; border: 1px solid rgba(255,45,120,0.35); border-radius: 12px; padding: 14px 16px; margin-top: 4px; backdrop-filter: blur(10px); }
-  .risk h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #ff7fa8; }
-  .risk div { font-size: 13px; color: #e6f1ff; }
+  .risk { background: #fff5f6; border-left: 3px solid #e11d48; border: 1px solid #fecdd3; border-radius: 12px; padding: 14px 16px; margin-top: 4px; }
+  .risk h3 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #881337; }
+  .risk div { font-size: 13px; color: var(--text-secondary); }
 
-  .suggestion-box {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-    margin-bottom: 12px;
-  }
-  .suggestion-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #e6f1ff; }
+  .suggestion-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .suggestion-box h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--blue-900); }
   .suggestion-box ul { margin-left: 18px; }
-  .suggestion-box li { margin-bottom: 6px; font-size: 13.5px; color: #b8c9e4; line-height: 1.45; }
+  .suggestion-box li { margin-bottom: 6px; font-size: 13.5px; color: var(--text-secondary); line-height: 1.45; }
 
   .download-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-  .download-bar button {
-    padding: 10px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 700;
-    border: 1px solid var(--neon-cyan);
-    color: #e6ffff;
-    background: rgba(0, 240, 255, 0.12);
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-  }
-  .download-bar button:hover { background: rgba(0, 240, 255, 0.25); box-shadow: 0 0 12px rgba(0, 240, 255, 0.25); }
+  .download-bar button { padding: 10px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1px solid var(--blue-600); color: var(--blue-800); background: var(--blue-50); cursor: pointer; }
+  .download-bar button:hover { background: var(--blue-100); }
 
-  .cycle {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-    margin-bottom: 12px;
-  }
-  .cycle h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #e6f1ff; }
+  .cycle { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .cycle h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--blue-900); }
   .cycle ul { margin-left: 18px; }
-  .cycle li { margin-bottom: 6px; font-size: 13.5px; color: #b8c9e4; }
+  .cycle li { margin-bottom: 6px; font-size: 13.5px; color: var(--text-secondary); }
 
-  .goal-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 16px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-    margin-bottom: 12px;
-  }
-  .goal-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #e6f1ff; }
-  .checkpoint { background: rgba(255,255,255,0.04); border-left: 3px solid var(--neon-cyan); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; backdrop-filter: blur(8px); }
-  .checkpoint input[type="checkbox"] { margin-top: 3px; accent-color: var(--neon-cyan); }
-  .checkpoint-content strong { font-size: 12px; font-weight: 700; color: #e6f1ff; display: block; margin-bottom: 2px; }
-  .checkpoint-content p { font-size: 12px; color: #b8c9e4; line-height: 1.4; }
-  .checkpoint.done { border-left-color: #39ff14; background: rgba(57,255,20,0.06); }
-  .checkpoint.done .checkpoint-content strong { text-decoration: line-through; color: #7fff7f; }
-  .checkpoint.done .checkpoint-content p { text-decoration: line-through; color: #7fff7f; }
+  .goal-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
+  .goal-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 10px; color: var(--blue-900); }
+  .checkpoint { background: var(--blue-50); border-left: 3px solid var(--blue-600); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+  .checkpoint input[type="checkbox"] { margin-top: 3px; accent-color: var(--blue-600); }
+  .checkpoint-content strong { font-size: 12px; font-weight: 700; color: var(--blue-900); display: block; margin-bottom: 2px; }
+  .checkpoint-content p { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+  .checkpoint.done { border-left-color: #15803d; background: #f0fff4; }
+  .checkpoint.done .checkpoint-content strong { text-decoration: line-through; color: #14532d; }
+  .checkpoint.done .checkpoint-content p { text-decoration: line-through; color: #14532d; }
 
   .sub-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
-  .sub-tabs button {
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    border: 1px solid var(--glass-border);
-    color: #cfe3ff;
-    background: rgba(255, 255, 255, 0.06);
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-  }
-  .sub-tabs button:hover { background: rgba(255, 255, 255, 0.12); }
-  .sub-tabs button.active { background: rgba(0, 240, 255, 0.15); border-color: var(--neon-cyan); color: #e6ffff; box-shadow: 0 0 12px rgba(0, 240, 255, 0.25); }
+  .sub-tabs button { padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--border); color: var(--text-secondary); background: var(--surface); cursor: pointer; }
+  .sub-tabs button:hover { background: var(--blue-50); border-color: var(--blue-300); }
+  .sub-tabs button.active { background: var(--blue-600); border-color: var(--blue-600); color: #ffffff; }
 
   .sub-panel { display: none; }
   .sub-panel.open { display: block; }
 
   .crm-board { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
   @media (max-width: 900px) { .crm-board { grid-template-columns: 1fr; } }
-  .crm-column {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 14px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-  }
-  .crm-column h3 { font-size: 13px; font-weight: 700; color: #e6f1ff; margin-bottom: 10px; text-align: center; }
-  .crm-column .count { font-size: 12px; color: #8aa3c9; text-align: center; margin-bottom: 10px; }
-  .crm-column .card-item { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: 10px; padding: 10px; margin-bottom: 8px; backdrop-filter: blur(8px); }
-  .crm-column .card-item h4 { font-size: 13px; font-weight: 700; color: #e6f1ff; margin-bottom: 4px; }
-  .crm-column .card-item p { font-size: 12px; color: #b8c9e4; line-height: 1.3; }
+  .crm-column { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .crm-column h3 { font-size: 13px; font-weight: 700; color: var(--blue-900); margin-bottom: 10px; text-align: center; }
+  .crm-column .count { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 10px; }
+  .crm-column .card-item { background: var(--blue-50); border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 8px; }
+  .crm-column .card-item h4 { font-size: 13px; font-weight: 700; color: var(--blue-900); margin-bottom: 4px; }
+  .crm-column .card-item p { font-size: 12px; color: var(--text-secondary); line-height: 1.3; }
   .crm-column .actions { display: flex; gap: 6px; margin-top: 6px; }
-  .crm-column .actions button {
-    flex: 1;
-    padding: 6px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    border: 1px solid var(--neon-cyan);
-    color: #e6ffff;
-    background: rgba(0, 240, 255, 0.12);
-    cursor: pointer;
-  }
-  .crm-column .actions button:hover { background: rgba(0, 240, 255, 0.25); box-shadow: 0 0 12px rgba(0, 240, 255, 0.25); }
+  .crm-column .actions button { flex: 1; padding: 6px; border-radius: 999px; font-size: 11px; font-weight: 700; border: 1px solid var(--blue-600); color: var(--blue-800); background: var(--blue-50); cursor: pointer; }
+  .crm-column .actions button:hover { background: var(--blue-100); }
 
   .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
   @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
-  .stat-box {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 14px;
-    padding: 14px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.04);
-  }
-  .stat-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #8aa3c9; margin-bottom: 6px; }
-  .stat-box .value { font-size: 22px; font-weight: 700; color: #e6f1ff; }
+  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .stat-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+  .stat-box .value { font-size: 22px; font-weight: 700; color: var(--blue-900); }
 </style>
 </head>
 <body>
@@ -600,44 +475,44 @@
         <h2>Meta maior da semana</h2>
         <p>Fechar contrato(s) de pelo menos R$ 4.000 esta semana.</p>
         <div class="bar" style="margin-top:12px"><span style="width:0%"></span></div>
-        <p style="font-size:12px;color:#475569;margin-top:8px;">Progresso: <span id="goalProgress">R$ 0 / R$ 4.000</span></p>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">Progresso: <span id="goalProgress">R$ 0 / R$ 4.000</span></p>
       </div>
 
       <div class="goal-card">
         <h2>Submetas por dia</h2>
         <div class="goal-card" style="padding:0;border:none;box-shadow:none;background:transparent;">
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Segunda</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Segunda</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Enviar proposta para 2 leads qualificados até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Confirmar reunião com pelo menos 1 lead até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Terça</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Terça</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Follow-up em 3 leads quentes do LinkedIn até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Registrar respostas e atualizar status até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Quarta</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Quarta</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Enviar follow-up para 2 leads frios até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Atualizar pipeline e registrar avanços até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Quinta</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Quinta</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Agendar 1 reunião comercial até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Enviar proposta personalizada para 1 lead até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Sexta</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Sexta</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Fechar pelo menos 1 contrato até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Confirmar valor total acumulado até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Sábado</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Sábado</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Follow-up pós-proposta para leads pendentes até 12h.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Registrar lições aprendidas e atualizar CRM até 18h.</p></div></div>
           </div>
           <div class="goal-card" style="margin-bottom:10px;">
-            <h4 style="font-size:13px;font-weight:700;color:#0f172a;margin-bottom:4px;">Domingo</h4>
+            <h4 style="font-size:13px;font-weight:700;color:var(--blue-900);margin-bottom:4px;">Domingo</h4>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 1</strong><p>Revisar resultado semanal vs meta de R$ 4.000.</p></div></div>
             <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Checkpoint 2</strong><p>Planejar ações da próxima semana.</p></div></div>
           </div>
