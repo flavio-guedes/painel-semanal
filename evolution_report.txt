@@ -1,4 +1,4 @@
-Evolução das mensagens — 30/08/2026 17:45
+Evolução das mensagens — 30/08/2026 18:16
 Arquivo: T1 - Founder_Head + Design - 00 - 283.html
 Total de leads: 283
 Concluídos + descarte: 0 (0.0%)
@@ -8,3 +8,4 @@ Status:
   - em andamento: 0
   - encerrado: 0
   - descarte: 0
+Delta desde última leitura: total +0, concluídos +0
