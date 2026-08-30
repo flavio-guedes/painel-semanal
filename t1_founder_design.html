@@ -243,11 +243,16 @@ function renderList() {
       const label = s === 'em andamento' ? 'em andamento' : s;
       return `<button class="status-btn ${status===s?'active':''}" onclick="event.stopPropagation(); setStatus(${l.id}, '${s}')">${label}</button>`;
     }).join('');
+    const actions = [];
+    if (l.linkedin) actions.push(`<a href="${l.linkedin}" target="_blank" class="contact-chip chip-li">LinkedIn</a>`);
+    if (l.wa) actions.push(`<a href="https://wa.me/${l.wa.replace(/\\D/g,'')}" target="_blank" class="contact-chip chip-wa">WhatsApp</a>`);
+    if (l.email) actions.push(`<a href="mailto:${l.email}" class="contact-chip chip-email">Email</a>`);
     return `<div class="lead-card ${status==='encerrado'||status==='descarte'?'done':''} ${activeId===l.id?'active':''}" onclick="selectLead(${l.id})">
       <div class="lead-name">${l.nome}</div>
       <div class="lead-empresa">${l.empresa || ''}</div>
       <div class="lead-cargo">${l.cargo || ''}</div>
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${buttons}</div>
+      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${actions.join('')}</div>
     </div>`;
   }).join('');
 }
