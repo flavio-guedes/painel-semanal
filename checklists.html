@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metas e Checklists — Flávio Guedes</title>
+<title>Checklists — Painel Semanal</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #f6f7fb; color: #111827; font-family: 'Inter', system-ui, sans-serif; padding: 0; }
@@ -12,9 +12,8 @@
   header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.3px; }
   header p { color: #475569; font-size: 14px; margin-top: 6px; }
 
-  .goal-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 14px; }
-  .goal-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #0f172a; }
-  .goal-card p { font-size: 13px; color: #334155; margin-bottom: 8px; }
+  .back-btn { display: inline-block; margin-bottom: 14px; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; text-decoration: none; cursor: pointer; }
+  .back-btn:hover { background: #1e293b; }
 
   .day-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); margin-bottom: 12px; }
   .day-card h3 { font-size: 14px; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
@@ -35,43 +34,39 @@
   .suggestion strong { font-size: 12px; font-weight: 700; color: #0f172a; display: block; margin-bottom: 2px; }
   .suggestion p { font-size: 12px; color: #334155; line-height: 1.4; }
 
-  .back-btn { display: inline-block; margin-bottom: 14px; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; border: 1px solid #334155; color: #e2e8f0; background: #0f172a; text-decoration: none; cursor: pointer; }
-  .back-btn:hover { background: #1e293b; }
+  .link { color: #4169E1; text-decoration: none; font-size: 12px; }
+  .link:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
   <div class="page">
     <header>
-      <h1>Metas e Checklists</h1>
-      <p>Checkpoints detalhados para fechar contratos esta semana.</p>
+      <h1>Checklists</h1>
+      <p>Ações concretas para cada checkpoint da semana.</p>
     </header>
 
     <a class="back-btn" href="https://flavio-guedes.github.io/painel-semanal/" target="_blank">← Voltar para o Painel</a>
-
-    <div class="goal-card">
-      <h2>Meta maior da semana</h2>
-      <p>Fechar contrato(s) de pelo menos R$ 4.000 esta semana.</p>
-    </div>
 
     <div class="day-card">
       <h3>Segunda</h3>
       <details open>
         <summary>Checkpoint 1 — Enviar proposta para 2 leads qualificados até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Filtrar segmento X e Y da lista de leads.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir tier 3 e priorizar por score maior.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Pegar fluxo de copy do follow-up para adaptar.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Contatar 5 prospects via WhatsApp e 20 via LinkedIn.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Use `pipelkd.html` para filtrar leads quentes e `email.html` para os emails.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir <a class="link" href="https://flavio-guedes.github.io/portfolio/pipelkd.html" target="_blank">pipelkd.html</a> e filtrar por temperatura MORNA/QUENTE.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Priorizar tier 3: leads com score 21-30 e sinais de proposta/salary.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir <a class="link" href="https://flavio-guedes.github.io/portfolio/email.html" target="_blank">email.html</a> e escolher 2 emails com assunto de proposta/reunião.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Pegar fluxo de copy do follow-up e adaptar para proposta curta.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar 5 mensagens no WhatsApp e 20 no LinkedIn até o meio-dia.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Use `proposta_padrao.html` como base. Personalize com o nome da empresa e o score do lead. Para LinkedIn, use o modelo de mensagem curta: lembre + valor + CTA.</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Confirmar reunião com pelo menos 1 lead até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Revisar respostas de segunda-feira.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar disponibilidade e link de reunião.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Confirmar agenda no calendário.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Ofereça 2 horários fixos para acelerar o sim.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Revisar respostas de segunda-feira em até 3 canais: LinkedIn, email, WhatsApp.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar disponibilidade com 2 horários fixos: 10h e 15h.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Criar evento no calendário com link de reunião.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Se o lead não responder até 16h, faça um follow-up curto: “ ainda faz sentido conversarmos hoje? ”</p></div>
         </div>
       </details>
     </div>
@@ -81,18 +76,18 @@
       <details open>
         <summary>Checkpoint 1 — Follow-up em 3 leads quentes do LinkedIn até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir `pipelkd.html` e filtrar temperatura MORNA/QUENTE.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Escolher 3 leads com score mais alto.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar follow-up personalizado.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Use copy curta: lembre + valor + CTA.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir <a class="link" href="https://flavio-guedes.github.io/portfolio/pipelkd.html" target="_blank">pipelkd.html</a> e filtrar temperatura QUENTE.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Escolher os 3 leads com score mais alto e com resposta pendente.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar follow-up personalizado em até 3 toques: lembre + valor + CTA.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Use copy curta: “Oi, [nome], passando para reforçar o valor de [benefício] e ver se você quer seguir com [próximo passo].”</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Registrar respostas e atualizar status até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Checar respostas de segunda e terça.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar status no CRM.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Use cores: verde = resposta, amarelo = pendente, vermelho = sem resposta.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Checar respostas de segunda e terça em LinkedIn, email e WhatsApp.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar status no CRM: verde = resposta, amarelo = pendente, vermelho = sem resposta.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Para cada resposta, registre: canal, intenção (reunião/proposta/não) e prazo de follow-up.</p></div>
         </div>
       </details>
     </div>
@@ -102,17 +97,18 @@
       <details open>
         <summary>Checkpoint 1 — Enviar follow-up para 2 leads frios até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir lista fria no CRM.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar conteúdo de valor + CTA.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Lead frio responde melhor a conteúdo do que a venda direta.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir lista fria no CRM: leads com score 21-25 e sem resposta há mais de 7 dias.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar conteúdo de valor: artigo, case ou snippet de resultado.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Incluir CTA suave: “quer ver aplicado no seu cenário?”</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Lead frio responde melhor a conteúdo do que a venda direta. Não envie proposta agora.</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Atualizar pipeline e registrar avanços até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Mover cards no CRM.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar lições aprendidas.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Anote por que avançou ou por que parou.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Mover cards no CRM para a etapa correta.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar lições aprendidas: por que avançou ou por que parou.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Anote objeções, dúvidas e interesses. Isso vira conteúdo depois.</p></div>
         </div>
       </details>
     </div>
@@ -122,19 +118,19 @@
       <details open>
         <summary>Checkpoint 1 — Agendar 1 reunião comercial até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Identificar lead com maior intenção.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar proposta de reunião curta: 15-20 min.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Oferecer 2 horários.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Use uma pergunta de qualificação antes de marcar.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Identificar lead com maior intenção: respondeu, clicou no link, pediu proposta.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar proposta de reunião curta: 15-20 min, objetivo claro.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Oferecer 2 horários fixos e 1 flexível.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Use uma pergunta de qualificação antes de marcar: “para eu preparar a reunião, qual é o seu maior desafio hoje?”</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Enviar proposta personalizada para 1 lead até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Escolher 1 lead com dor conhecida.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Adaptar `proposta_v3.html` ou `proposta_padrao.html`.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar por email ou LinkedIn.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Inclua valor estimado e próximos passos.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Escolher 1 lead com dor conhecida: mencionou problema, pediu orçamento ou demonstrou interesse.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Abrir <a class="link" href="https://flavio-guedes.github.io/portfolio/proposta_v3.html" target="_blank">proposta_v3.html</a> e adaptar com nome da empresa e valor.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar por email ou LinkedIn com assunto direto: “Proposta para [empresa]”.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Inclua valor estimado, prazo de entrega e próximos passos. Não envie PDF anexo no primeiro contato.</p></div>
         </div>
       </details>
     </div>
@@ -144,18 +140,18 @@
       <details open>
         <summary>Checkpoint 1 — Fechar pelo menos 1 contrato até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Revisar propostas pendentes.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Fazer follow-up de fechamento.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar contrato/resumo comercial.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Se houver objeção, responda com valor e prazo.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Revisar propostas pendentes da semana.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Fazer follow-up de fechamento: “Vamos fechar hoje?”</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar resumo comercial com valor, prazo e forma de pagamento.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Se houver objeção, responda com valor e prazo: “Entendo. Vamos começar com esse valor até [data] e medir o resultado.”</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Confirmar valor total acumulado até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar contratos fechados.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar meta de R$ 4.000.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Se não fechar, recalcule a meta para a próxima semana.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar contratos fechados na semana.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar meta de R$ 4.000 com valores reais.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Se não fechar, recalcule a meta para a próxima semana e identifique o gargalo: timing, proposta ou canal.</p></div>
         </div>
       </details>
     </div>
@@ -165,17 +161,17 @@
       <details open>
         <summary>Checkpoint 1 — Follow-up pós-proposta para leads pendentes até 12h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Listar leads pendentes.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar follow-up curto e objetivo.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Pergunte: “ainda faz sentido para você?”</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Listar leads pendentes: enviou proposta, mas não fechou.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Enviar follow-up curto e objetivo: “Ainda faz sentido para você?”</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Ofereça um bônus ou prazo especial para gerar urgência.</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Registrar lições aprendidas e atualizar CRM até 18h</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar objeções comuns.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar pipeline.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Transforme objeções em FAQs para copy.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Registrar objeções comuns da semana.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Atualizar pipeline com status real.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Transforme objeções em FAQs para usar nas próximas propostas.</p></div>
         </div>
       </details>
     </div>
@@ -186,16 +182,16 @@
         <summary>Checkpoint 1 — Revisar resultado semanal vs meta de R$ 4.000</summary>
         <div class="checklist">
           <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Comparar contratos fechados vs meta.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Identificar gargalos.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Se não fechar, analise timing, proposta ou canal.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Identificar gargalos: timing, proposta, canal ou follow-up.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Se não fechar, analise onde o lead parou e ajuste a copy ou o fluxo.</p></div>
         </div>
       </details>
       <details>
         <summary>Checkpoint 2 — Planejar ações da próxima semana</summary>
         <div class="checklist">
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Definir nova meta.</p></div></div>
-          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Ajustar agenda.</p></div></div>
-          <div class="suggestion"><strong>Sugestão</strong><p>Mantenha pelo menos 1 follow-up por dia.</p></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Definir nova meta de fechamento.</p></div></div>
+          <div class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"><div class="checklist-item-text"><strong>Tarefa</strong><p>Ajustar agenda com base nos gargalos.</p></div></div>
+          <div class="suggestion"><strong>Sugestão</strong><p>Mantenha pelo menos 1 follow-up por dia e 1 proposta por dia.</p></div>
         </div>
       </details>
     </div>
