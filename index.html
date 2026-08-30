@@ -126,7 +126,7 @@
   <div class="page">
     <header>
       <h1>Painel Semanal</h1>
-      <p>Relatório + Agenda + Metas + CRM em uma página.</p>
+      <p>Relatório + Agenda + Metas + Pipeline + Conteúdo em uma página.</p>
     </header>
 
     <div class="kpi">
@@ -475,214 +475,331 @@
       </div>
     </div>
 
-    <!-- CRM -->
-    <div id="crm" class="panel">
+    <!-- PIPELINE -->
+    <div id="pipeline" class="panel">
       <div class="sub-tabs">
-        <button class="active" onclick="switchSubTab('crm-pipeline', this)">Pipeline</button>
-        <button onclick="switchSubTab('crm-projetos', this)">Projetos</button>
-        <button onclick="switchSubTab('crm-leads', this)">Leads</button>
-        <button onclick="switchSubTab('crm-portfolio', this)">Portfolio</button>
-        <button onclick="switchSubTab('crm-clientes', this)">Clientes</button>
-        <button onclick="switchSubTab('crm-geral', this)">Geral</button>
+        <button class="active" onclick="switchSubTab('pipe-crm', this)">CRM/Email</button>
+        <button onclick="switchSubTab('pipe-projetos', this)">Projetos</button>
+        <button onclick="switchSubTab('pipe-linkedin', this)">LinkedIn</button>
+        <button onclick="switchSubTab('pipe-conteudo', this)">Conteúdo</button>
+        <button onclick="switchSubTab('pipe-epq', this)">EPQ</button>
+        <button onclick="switchSubTab('pipe-portfolio', this)">Portfolio</button>
+        <button onclick="switchSubTab('pipe-outros', this)">Outros fluxos</button>
       </div>
 
-      <div id="crm-pipeline" class="sub-panel open">
+      <div id="pipe-crm" class="sub-panel open">
         <div class="crm-board">
           <div class="crm-column">
             <h3>Pesquisa</h3>
-            <div class="count">3 cartões</div>
-            <div class="card-item"><h4>Beatriz Huscher</h4><p>Bela Metais · Score 25 · LinkedIn</p></div>
-            <div class="card-item"><h4>Camila Castro</h4><p>DP Brasil · Score 28 · LinkedIn</p></div>
-            <div class="card-item"><h4>Paula Martins</h4><p>iFood · Score 31 · Email</p></div>
+            <div class="count">Fluxo: descoberta e qualificação inicial</div>
+            <div class="card-item"><h4>Ações</h4><p>Filtrar leads por segmento X/Y, abrir tier 3, checar score e sinais.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Lista carregada, filtros aplicados, leads priorizados.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Novos leads</h3>
+            <div class="count">Fluxo: interessados / em conversa</div>
+            <div class="card-item"><h4>Ações</h4><p>Classificar como interessado ou em conversa; registrar canal e intenção.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Resposta recebida, interesse confirmado, próximo passo definido.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Reunião marcada</h3>
+            <div class="count">Fluxo: dossie + perguntas</div>
+            <div class="card-item"><h4>Ações</h4><p>Levantar dossie do lead, preparar perguntas de qualificação, enviar confirmação.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Dossie pronto, perguntas prontas, link enviado, lembrete criado.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Proposta</h3>
+            <div class="count">Fluxo: orçamento baseado em informações</div>
+            <div class="card-item"><h4>Ações</h4><p>Montar orçamento com base no dossie, adaptar `proposta_v3.html` ou `proposta_padrao.html`, enviar por email/LinkedIn.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Valor definido, prazo fechado, forma de pagamento, proposta enviada.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Follow-up / Ganho / Perdido</h3>
+            <div class="count">Fluxo: acompanhamento e resultado</div>
+            <div class="card-item"><h4>Ações</h4><p>Follow-up curto; se ganho, registrar contrato; se perdido, registrar motivo.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Follow-up feito, status final definido, lições registradas.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-projetos" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Pesquisa</h3>
+            <div class="count">Descoberta e escopo</div>
+            <div class="card-item"><h4>Ações</h4><p>Mapear objetivo, restrições e resultado esperado.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Escopo definido, restrições listadas, sucesso medido.</p></div>
           </div>
           <div class="crm-column">
             <h3>Backlog</h3>
-            <div class="count">3 cartões</div>
-            <div class="card-item"><h4>Marcelo Neves</h4><p>Enredo · Score 27 · LinkedIn</p></div>
-            <div class="card-item"><h4>Katelyn Halstead</h4><p>Score 35 · Email</p></div>
-            <div class="card-item"><h4>Alex Plunkett</h4><p>Score 35 · Email</p></div>
+            <div class="count">Ideias e tasks priorizadas</div>
+            <div class="card-item"><h4>Ações</h4><p>Listar tasks, priorizar por impacto/esforço, definir sequência.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Tasks priorizadas, ordem definida, responsável por task.</p></div>
           </div>
           <div class="crm-column">
             <h3>Fazendo</h3>
-            <div class="count">2 cartões</div>
-            <div class="card-item"><h4>Maíra Lucchese</h4><p>Orla Rio · Contato enviado</p></div>
-            <div class="card-item"><h4>Diana Rose Ariaso</h4><p>Untapped · Aguardando resposta</p></div>
+            <div class="count">Execução</div>
+            <div class="card-item"><h4>Ações</h4><p>Executar tasks, registrar bloqueios e entregas.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Task em andamento, blocker registrado, entrega documentada.</p></div>
           </div>
           <div class="crm-column">
             <h3>Concluído</h3>
-            <div class="count">1 cartão</div>
-            <div class="card-item"><h4>Marcio Magalhães</h4><p>L'Oréal · Proposta enviada</p></div>
+            <div class="count">Validação</div>
+            <div class="card-item"><h4>Ações</h4><p>Testar, validar com usuário, documentar resultado.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Teste feito, validação ok, resultado registrado.</p></div>
           </div>
           <div class="crm-column">
-            <h3>Follow-up</h3>
-            <div class="count">2 cartões</div>
-            <div class="card-item"><h4>Camila Friedrich</h4><p>Vyntha · Agradecer proposta</p></div>
-            <div class="card-item"><h4>Melissa Chapman</h4><p>Creative Circle · Confirmar interesse</p></div>
+            <h3>Entregue</h3>
+            <div class="count">Publicação</div>
+            <div class="card-item"><h4>Ações</h4><p>Publicar, comunicar time, atualizar referências.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Publicado, comunicado, links atualizados.</p></div>
           </div>
         </div>
       </div>
 
-      <div id="crm-projetos" class="sub-panel">
+      <div id="pipe-linkedin" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Pesquisa</h3>
+            <div class="count">Descoberta de perfis</div>
+            <div class="card-item"><h4>Ações</h4><p>Buscar por segmento, cargo e localização; salvar perfis.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Busca feita, filtros aplicados, perfis salvos.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Qualificação</h3>
+            <div class="count">Score e temperatura</div>
+            <div class="card-item"><h4>Ações</h4><p>Aplicar score, classificar temperatura, registrar sinais.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Score aplicado, temperatura definida, sinais registrados.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Abordagem</h3>
+            <div class="count">Mensagem personalizada</div>
+            <div class="card-item"><h4>Ações</h4><p>Enviar mensagem curta: lembre + valor + CTA.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Mensagem enviada, follow-up agendado.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Reunião</h3>
+            <div class="count">Qualificação comercial</div>
+            <div class="card-item"><h4>Ações</h4><p>Agendar, preparar dossie, levantar dor e orçamento.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Dossie pronto, perguntas prontas, link enviado.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Proposta / Follow-up / Ganho / Perdido</h3>
+            <div class="count">Fechamento</div>
+            <div class="card-item"><h4>Ações</h4><p>Enviar proposta, follow-up, registrar ganho/perdido.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Proposta enviada, follow-up feito, status final definido.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-conteudo" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Ideia</h3>
+            <div class="count">Brainstorm e curadoria</div>
+            <div class="card-item"><h4>Ações</h4><p>Registrar tema, objetivo e formato.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Tema definido, objetivo claro, formato escolhido.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Pauta</h3>
+            <div class="count">Planejamento editorial</div>
+            <div class="card-item"><h4>Ações</h4><p>Definir título, ângulo, CTA e data de publicação.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Título, ângulo, CTA e data definidos.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Produção</h3>
+            <div class="count">Criação</div>
+            <div class="card-item"><h4>Ações</h4><p>Escrever/gravar/desenhar; incluir referências e exemplos.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Conteúdo produzido, revisão ortográfica feita.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Revisão</h3>
+            <div class="count">Aprovação</div>
+            <div class="card-item"><h4>Ações</h4><p>Revisar tom, consistência e links; validar com stakeholder.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Revisão feita, aprovação registrada, alterações aplicadas.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Publicação / Analytics</h3>
+            <div class="count">Distribuição e medição</div>
+            <div class="card-item"><h4>Ações</h4><p>Publicar nos canais, acompanhar alcance, engajamento e conversão.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Publicado, métricas coletadas, insights registrados.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-epq" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Pesquisa</h3>
+            <div class="count">Diagnóstico e dados</div>
+            <div class="card-item"><h4>Ações</h4><p>Mapear métricas, fontes e hipóteses.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Dados coletados, hipóteses documentadas.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Backlog</h3>
+            <div class="count">Ações priorizadas</div>
+            <div class="card-item"><h4>Ações</h4><p>Listar melhorias, priorizar por impacto/esforço.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Ações priorizadas, sequência definida.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Fazendo</h3>
+            <div class="count">Execução do projeto</div>
+            <div class="card-item"><h4>Ações</h4><p>Implementar ajustes, rodar testes, documentar mudanças.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Ajustes feitos, testes passaram, docs atualizadas.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Revisão</h3>
+            <div class="count">Validação</div>
+            <div class="card-item"><h4>Ações</h4><p>Validar com usuário, checar métricas, corrigir bugs.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Validação feita, métricas ok, bugs corrigidos.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Publicado / Medido</h3>
+            <div class="count">Resultado</div>
+            <div class="card-item"><h4>Ações</h4><p>Publicar, medir resultado, registrar aprendizados.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Publicado, métricas coletadas, aprendizados documentados.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-portfolio" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Pesquisa</h3>
+            <div class="count">Referências e briefing</div>
+            <div class="card-item"><h4>Ações</h4><p>Mapear referências, definir tom e objetivo da página.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Referências ok, briefing escrito.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Backlog</h3>
+            <div class="count">Seções e conteúdo</div>
+            <div class="card-item"><h4>Ações</h4><p>Listar seções, textos, imagens e CTAs.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Seções definidas, conteúdo aprovado.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Fazendo</h3>
+            <div class="count">Construção</div>
+            <div class="card-item"><h4>Ações</h4><p>Montar HTML/CSS, inserir conteúdo, ajustar responsividade.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Página montada, mobile ok, links testados.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Revisão</h3>
+            <div class="count">Validação</div>
+            <div class="card-item"><h4>Ações</h4><p>Validar em diferentes dispositivos, checar SEO e performance.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Validação ok, SEO ajustado, performance aceitável.</p></div>
+          </div>
+          <div class="crm-column">
+            <h3>Publicado</h3>
+            <div class="count">Deploy</div>
+            <div class="card-item"><h4>Ações</h4><p>Commit, push, validar no ar e atualizar links.</p></div>
+            <div class="card-item"><h4>Checklist</h4><p>Commit feito, deploy ok, links atualizados.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-outros" class="sub-panel">
+        <div class="suggestion-box">
+          <h2>Outros fluxos sugeridos</h2>
+          <ul>
+            <li><strong>Vendas:</strong> Lead → Qualificação → Proposta → Negociação → Fechamento → Pós-venda</li>
+            <li><strong>Parcerias:</strong> Identificação → Abordagem → Reunião → Proposta → Contrato → Execução</li>
+            <li><strong>Produto:</strong> Ideia → PRD → Protótipo → Validação → Lançamento → Iteração</li>
+            <li><strong>Suporte:</strong> Chamado → Triagem → Diagnóstico → Resolução → Follow-up → Encerramento</li>
+            <li><strong>Recrutamento:</strong> Vaga aberta → Triagem → Entrevista → Proposta → Contratação → Onboarding</li>
+          </ul>
+        </div>
+        <div class="suggestion-box">
+          <h2>Como usar</h2>
+          <ul>
+            <li>Cada fluxo pode ser adaptado para uma frente específica.</li>
+            <li>Use o kanban para mover cartões entre etapas.</li>
+            <li>Adicione checklist por etapa para garantir execução consistente.</li>
+            <li>Monitore taxa de conversão por etapa para identificar gargalos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTEÚDO -->
+    <div id="content" class="panel">
+      <div class="sub-tabs">
+        <button class="active" onclick="switchSubTab('content-planejamento', this)">Planejamento</button>
+        <button onclick="switchSubTab('content-producao', this)">Produção</button>
+        <button onclick="switchSubTab('content-distribuicao', this)">Distribuição</button>
+        <button onclick="switchSubTab('content-analytics', this)">Analytics</button>
+      </div>
+
+      <div id="content-planejamento" class="sub-panel open">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Calendário editorial</h3>
+            <div class="count">Próxima publicação: 30/08</div>
+            <div class="actions"><button>Editar</button><button>Adicionar</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Linhas editoriais</h3>
+            <div class="count">3 ativas</div>
+            <div class="actions"><button>Editar</button><button>Nova</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Temas da semana</h3>
+            <div class="count">5 temas</div>
+            <div class="actions"><button>Editar</button><button>Sugerir</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-producao" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Roteiros</h3>
+            <div class="count">2 em produção</div>
+            <div class="actions"><button>Editar</button><button>Novo</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Artigos</h3>
+            <div class="count">1 rascunho</div>
+            <div class="actions"><button>Editar</button><button>Publicar</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Design</h3>
+            <div class="count">3 peças</div>
+            <div class="actions"><button>Editar</button><button>Criar</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-distribuicao" class="sub-panel">
+        <div class="crm-board">
+          <div class="crm-column">
+            <h3>Redes sociais</h3>
+            <div class="count">Agendado: 2 posts</div>
+            <div class="actions"><button>Agendar</button><button>Publicar</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Newsletter</h3>
+            <div class="count">Próxima edição: 01/09</div>
+            <div class="actions"><button>Editar</button><button>Enviar</button></div>
+          </div>
+          <div class="crm-column">
+            <h3>Site/Blog</h3>
+            <div class="count">3 publicados</div>
+            <div class="actions"><button>Editar</button><button>Novo</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="content-analytics" class="sub-panel">
         <div class="stats-grid">
-          <div class="stat-box"><h4>Em andamento</h4><div class="value">5</div></div>
-          <div class="stat-box"><h4>Pausados</h4><div class="value">2</div></div>
-          <div class="stat-box"><h4>Entregues</h4><div class="value">3</div></div>
+          <div class="stat-box"><h4>Alcance</h4><div class="value">12.4K</div></div>
+          <div class="stat-box"><h4>Engajamento</h4><div class="value">8.2%</div></div>
+          <div class="stat-box"><h4>Conversões</h4><div class="value">34</div></div>
         </div>
-        <details open>
-          <summary>Portfolio</summary>
-          <div class="details-body">
-            <h4>Ações</h4>
-            <ul>
-              <li>Ajustar <code>designhead.html</code></li>
-              <li>Validar <code>parceria.html</code></li>
-              <li>Remover links quebrados</li>
-            </ul>
-            <h4>Status</h4>
-            <p>Em andamento</p>
-          </div>
-        </details>
-        <details>
-          <summary>LinkedIn Prospecção</summary>
-          <div class="details-body">
-            <h4>Ações</h4>
-            <ul>
-              <li>Enviar 10 mensagens do Top 30</li>
-              <li>Atualizar <code>pipelkd.html</code></li>
-              <li>Registrar respostas</li>
-            </ul>
-            <h4>Status</h4>
-            <p>Em andamento</p>
-          </div>
-        </details>
-        <details>
-          <summary>EPQ/Forecast</summary>
-          <div class="details-body">
-            <h4>Ações</h4>
-            <ul>
-              <li>Refinar CSS para mobile</li>
-              <li>Adicionar suporte a offline</li>
-              <li>Criar white-label</li>
-            </ul>
-            <h4>Status</h4>
-            <p>Em andamento</p>
-          </div>
-        </details>
-      </div>
-
-      <div id="crm-leads" class="sub-panel">
-        <details open>
-          <summary>Top 10 LinkedIn</summary>
-          <div class="details-body">
-            <ul>
-              <li>Betina Cupello — Arco Educação</li>
-              <li>Ana Padinha — Studio Rx</li>
-              <li>Ana Luiza Amaral Baldacini — Kuaishou</li>
-              <li>Marcelo Neves — Enredo</li>
-              <li>Caio Lo Bianco — LIV</li>
-            </ul>
-          </div>
-        </details>
-        <details>
-          <summary>Top 11-25 LinkedIn</summary>
-          <div class="details-body">
-            <ul>
-              <li>Elaine Carvalho — Binatural</li>
-              <li>Mariana Ruas — UnitedClass</li>
-              <li>Raquel Kiss — Compass UOL</li>
-              <li>Rodrigo Souza — Bradesco</li>
-              <li>Clever Braga — Cometa Gaming</li>
-            </ul>
-          </div>
-        </details>
-        <details>
-          <summary>Top Email</summary>
-          <div class="details-body">
-            <ul>
-              <li>camilafriedrich@vyntha.com</li>
-              <li>accenture.application@outlook.com</li>
-              <li>roberthalf.screeningdesk@outlook.com</li>
-              <li>flavia_guima@yahoo.com.br</li>
-              <li>jessica.ramirez@sthreeco.com</li>
-            </ul>
-          </div>
-        </details>
-      </div>
-
-      <div id="crm-portfolio" class="sub-panel">
-        <details open>
-          <summary>Páginas foco</summary>
-          <div class="details-body">
-            <ul>
-              <li><code>produto.html</code></li>
-              <li><code>parceria.html</code></li>
-              <li><code>designhead.html</code></li>
-            </ul>
-          </div>
-        </details>
-        <details>
-          <summary>Proposta e CV</summary>
-          <div class="details-body">
-            <ul>
-              <li><code>proposta_v3.html</code></li>
-              <li><code>proposta_padrao.html</code></li>
-              <li><code>cv-product-designer.html</code></li>
-            </ul>
-          </div>
-        </details>
-        <details>
-          <summary>Painéis</summary>
-          <div class="details-body">
-            <ul>
-              <li><code>pipelkd.html</code></li>
-              <li><code>email.html</code></li>
-              <li><code>forecast.html</code></li>
-            </ul>
-          </div>
-        </details>
-      </div>
-
-      <div id="crm-clientes" class="sub-panel">
-        <details open>
-          <summary>EPQ</summary>
-          <div class="details-body">
-            <p>Projeto principal em andamento.</p>
-          </div>
-        </details>
-        <details>
-          <summary>Projetos pessoais</summary>
-          <div class="details-body">
-            <p>Portfolio, prospecção e automações.</p>
-          </div>
-        </details>
-      </div>
-
-      <div id="crm-geral" class="sub-panel">
-        <details open>
-          <summary>Visão geral</summary>
-          <div class="details-body">
-            <ul>
-              <li>7 frentes ativas</li>
-              <li>10 projetos</li>
-              <li>8 tarefas concluídas</li>
-              <li>6 tarefas pendentes</li>
-              <li>1 risco principal</li>
-            </ul>
-          </div>
-        </details>
-        <details>
-          <summary>Resumo por frente</summary>
-          <div class="details-body">
-            <ul>
-              <li>Portfolio: 70%</li>
-              <li>LinkedIn: 60%</li>
-              <li>Email: 40%</li>
-              <li>CRM/Drive: 30%</li>
-              <li>Beni/áudios: 0%</li>
-              <li>EPQ/Forecast: 90%</li>
-              <li>Proposta/CV: 100%</li>
-            </ul>
-          </div>
-        </details>
+        <div class="goal-card">
+          <h2>Insights</h2>
+          <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Melhor horário</strong><p>Publicar entre 18h e 20h para maior engajamento.</p></div></div>
+          <div class="checkpoint"><input type="checkbox" onchange="toggleCheckpoint(this)"><div class="checkpoint-content"><strong>Tema em alta</strong><p>Aumentar conteúdo sobre produtividade e IA.</p></div></div>
+        </div>
       </div>
     </div>
 
