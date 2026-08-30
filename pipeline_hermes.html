@@ -562,7 +562,7 @@
     <!-- PIPELINE -->
     <div id="pipeline" class="panel">
       <div class="sub-tabs">
-        <button class="active" onclick="switchSubTab('pipe-geral', this)">Geral</button>
+        <button class="active" onclick="switchSubTab('pipe-geral', this)">Pipeline Geral</button>
         <button onclick="switchSubTab('pipe-crm', this)">CRM</button>
         <button onclick="switchSubTab('pipe-projetos', this)">Projetos</button>
         <button onclick="switchSubTab('pipe-linkedin', this)">LinkedIn</button>
@@ -573,6 +573,40 @@
       </div>
 
       <div id="pipe-geral" class="sub-panel open">
+        <div class="suggestion-box">
+          <h2>Pipeline Geral</h2>
+          <p>Tarefas de todas as frentes em um único fluxo.</p>
+          <div class="crm-board" style="margin-top:12px;">
+            <div class="crm-column">
+              <h3>Planejado</h3>
+              <div class="count">Todas as frentes</div>
+              <div class="card-item"><h4>Exemplo</h4><p>Revisar pauta de conteúdo</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <div class="card-item"><h4>Exemplo</h4><p>Follow-up LinkedIn Top 30</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>A fazer</h3>
+              <div class="count">Todas as frentes</div>
+              <div class="card-item"><h4>Exemplo</h4><p>Enviar proposta para lead X</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>Fazendo</h3>
+              <div class="count">Todas as frentes</div>
+              <div class="card-item"><h4>Exemplo</h4><p>Atualizar forecast.html</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+            <div class="crm-column">
+              <h3>Publicado</h3>
+              <div class="count">Todas as frentes</div>
+              <div class="card-item"><h4>Exemplo</h4><p>Publicar artigo no blog</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova tarefa</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pipe-crm" class="sub-panel">
         <div class="suggestion-box">
           <h2>Pipeline Geral</h2>
           <p>Tarefas de todas as frentes em um único fluxo.</p>
