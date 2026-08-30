@@ -107,14 +107,6 @@
   .tag-email { background: #1e3a2f; color: var(--green); }
   .tag-wa { background: #1a3320; color: #5bd07a; }
   .tag-li { background: #1a2240; color: #7b9ef7; }
-  .status-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
-  }
-  .status-dot.pending { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
-  .status-dot.respondido { background: var(--blue); }
-  .status-dot.em-andamento { background: var(--yellow); }
-  .status-dot.encerrado { background: var(--green); }
-  .status-dot.descarte { background: var(--red); }
   .msg-box {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -281,6 +273,19 @@ function setStatus(id, status) {
     renderList();
     renderDetail();
   }
+}
+function copyMsg(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  const msg = (l.steps && l.steps[activeStep]) ? l.steps[activeStep].msg : '';
+  navigator.clipboard.writeText(msg).then(() => {
+    const btn = document.getElementById('copy-btn-' + id);
+    if (btn) {
+      btn.textContent = '✓ copiado';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copiar'; btn.classList.remove('copied'); }, 2000);
+    }
+  }).catch(() => {});
 }
 function renderDetail() {
   const l = leads.find(x => x.id === activeId);
