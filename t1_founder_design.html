@@ -239,10 +239,7 @@ function renderList() {
   const statuses = ["pendente","respondido","em andamento","encerrado","descarte"];
   list.innerHTML = visible.map(l => {
     const status = l.status || 'pendente';
-    const buttons = statuses.map(s => {
-      const label = s === 'em andamento' ? 'em andamento' : s;
-      return `<button class="status-btn ${status===s?'active':''}" onclick="event.stopPropagation(); setStatus(${l.id}, '${s}')">${label}</button>`;
-    }).join('');
+    const statusOptions = statuses.map(s => `<option value="${s}" ${status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('');
     const actions = [];
     if (l.linkedin) actions.push(`<a href="${l.linkedin}" target="_blank" class="contact-chip chip-li">LinkedIn</a>`);
     if (l.wa) actions.push(`<a href="https://wa.me/${l.wa.replace(/\\D/g,'')}" target="_blank" class="contact-chip chip-wa">WhatsApp</a>`);
@@ -251,7 +248,9 @@ function renderList() {
       <div class="lead-name">${l.nome}</div>
       <div class="lead-empresa">${l.empresa || ''}</div>
       <div class="lead-cargo">${l.cargo || ''}</div>
-      <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${buttons}</div>
+      <div style="margin-top:8px;">
+        <select class="status-select" onchange="event.stopPropagation(); setStatus(${l.id}, this.value)">${statusOptions}</select>
+      </div>
       <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">${actions.join('')}</div>
     </div>`;
   }).join('');
