@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Baixa Relevância — E-mails e Grupos</title>
+<style>
+  :root {
+    --bg:#0f0f11; --surface:#18181c; --surface2:#222228; --border:#2a2a32;
+    --accent:#5b6ef7; --accent-dim:#3b4db040; --green:#3ecf8e; --yellow:#f5c842;
+    --red:#f56b6b; --blue:#6ba4f5; --text:#e8e8f0; --text-muted:#6e6e85;
+    --text-dim:#9999b0; --radius:10px; --mono:'JetBrains Mono','Fira Mono',monospace;
+    --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55;min-height:100vh}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:12px}
+  .header-left{display:flex;align-items:center;gap:14px}
+  .logo-mark{width:34px;height:34px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;letter-spacing:-0.5px}
+  .header-title{font-size:13px;font-weight:600;color:var(--text)}
+  .header-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+  .pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent)}
+  .toolbar{display:flex;gap:10px;padding:14px 28px 0;flex-wrap:wrap;align-items:center}
+  .search{padding:8px 12px;border-radius:8px;background:var(--surface);color:var(--text);border:1px solid var(--border);font-size:13px;min-width:220px}
+  .btn{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none}
+  .btn-secondary{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 28px 0}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+  .k{font-size:10px;color:var(--text-muted);font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .v{font-size:22px;font-weight:800;margin-top:4px}
+  .section{display:grid;gap:14px;margin-top:18px;padding:0 28px 28px}
+  .section-title{font-size:13px;color:var(--text-muted);letter-spacing:.6px;text-transform:uppercase}
+  .group{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
+  .group-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .group-title{font-size:13px;font-weight:700;color:var(--text)}
+  .group-meta{font-size:11px;color:var(--text-muted)}
+  .contact{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .contact:last-child{border-bottom:none}
+  .contact-name{font-weight:600;font-size:13px;color:var(--text);text-decoration:none}
+  .contact-name:hover{text-decoration:underline}
+  .contact-meta{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.12);display:inline-block;white-space:nowrap}
+  .b-green{color:var(--green);border-color:rgba(10,255,176,.25);background:rgba(10,255,176,.10)}
+  .b-blue{color:var(--blue);border-color:rgba(125,196,255,.25);background:rgba(125,196,255,.10)}
+  .b-amber{color:var(--yellow);border-color:rgba(255,209,102,.25);background:rgba(255,209,102,.10)}
+  .b-red{color:var(--red);border-color:rgba(255,91,126,.25);background:rgba(255,91,126,.10)}
+  .msg-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:13px;color:var(--text);white-space:pre-wrap;margin-top:10px}
+  .empty{color:var(--text-muted);font-size:12px;padding:10px 0}
+  @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)} .contact{flex-direction:column;align-items:flex-start} .group-header{flex-direction:column;align-items:flex-start}}
+  @media(max-width:480px){.kpis{grid-template-columns:1fr 1fr} body{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <div class="logo-mark">BR</div>
+    <div>
+      <div class="header-title">Baixa Relevância</div>
+      <div class="header-sub">Somente contatos com e-mail</div>
+    </div>
+  </div>
+  <span class="pill" id="pill-count">Carregando...</span>
+</header>
+
+<div class="kpis">
+  <div class="card"><div class="k">Com e-mail</div><div class="v" id="k-email">0</div></div>
+  <div class="card"><div class="k">Grupos</div><div class="v" id="k-groups">0</div></div>
+  <div class="card"><div class="k">Copiados</div><div class="v" id="k-copied">0</div></div>
+  <div class="card"><div class="k">Mensagens</div><div class="v" id="k-msgs">0</div></div>
+</div>
+
+<div class="toolbar">
+  <input class="search" id="search" placeholder="Buscar por nome, empresa ou e-mail..." oninput="render()" />
+  <button class="btn" onclick="copyAllEmails()">Copiar e-mails para CCO</button>
+  <button class="btn btn-secondary" onclick="copyAllEmailsComma()">Copiar e-mails separados por vírgula</button>
+</div>
+
+<div class="section">
+  <div class="section-title">Grupos</div>
+  <div id="groups"></div>
+</div>
+
+<script>
+let rows = [];
+let copiedCount = 0;
+let generatedMessages = 0;
+
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h=>h.trim().toLowerCase());
+  return lines.slice(1).map((line,idx)=>{
+    const cols = line.split(',');
+    const obj = {};
+    headers.forEach((h,i)=> obj[h] = (cols[i]||'').trim());
+    obj._id = idx;
+    return obj;
+  });
+}
+
+function getDomain(email){
+  if(!email) return '';
+  const parts = email.split('@');
+  return parts.length > 1 ? parts[1].toLowerCase() : '';
+}
+
+function getGroupKey(r){
+  const domain = getDomain(r.e_mail || '');
+  const empresa = (r.empresa || '').trim();
+  if(domain) return `domain:${domain}`;
+  if(empresa) return `company:${empresa.toLowerCase()}`;
+  return 'outros';
+}
+
+function getGroupLabel(key){
+  if(key.startsWith('domain:')) return key.replace('domain:','').toUpperCase();
+  if(key.startsWith('company:')) return key.replace('company:','');
+  return 'Outros';
+}
+
+function copyText(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      copiedCount++;
+      document.getElementById('k-copied').textContent = String(copiedCount);
+    }).catch(()=>{});
+  }
+}
+
+function copyAllEmails(){
+  const emails = rows.filter(r=> r.e_mail).map(r=> r.e_mail).filter(Boolean);
+  copyText(emails.join(';'));
+}
+function copyAllEmailsComma(){
+  const emails = rows.filter(r=> r.e_mail).map(r=> r.e_mail).filter(Boolean);
+  copyText(emails.join(','));
+}
+
+function generateMessage(r){
+  const nome = r.nome || 'contato';
+  const empresa = r.empresa || '';
+  const cargo = r.cargo || '';
+  const trecho = (r.trecho || '').replace(/<[^>]+>/g,'').trim();
+  const base = `Olá, ${nome.split(' ')[0]}. Tudo bem?\n\n`;
+  const middle = trecho ? `Vi seu contato no LinkedIn e gostaria de retomar o assunto: "${trecho.slice(0,140)}...".\n\n` : '';
+  const close = `Se fizer sentido, me avise que envio meu portfólio.\n\nFlávio Guedes\nhttps://flavio-guedes.github.io/portfolio/parceria.html`;
+  return base + middle + close;
+}
+
+function render(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const container = document.getElementById('groups');
+  let data = rows;
+  if(q) data = data.filter(r=> (r.nome||'').toLowerCase().includes(q) || (r.empresa||'').toLowerCase().includes(q) || (r.e_mail||'').toLowerCase().includes(q));
+
+  const withEmail = rows.filter(r=> r.e_mail);
+  const groups = {};
+  withEmail.forEach(r=>{
+    const key = getGroupKey(r);
+    if(!groups[key]) groups[key] = [];
+    groups[key].push(r);
+  });
+
+  document.getElementById('k-email').textContent = String(withEmail.length);
+  document.getElementById('k-groups').textContent = String(Object.keys(groups).length);
+  document.getElementById('pill-count').textContent = `${withEmail.length} contatos com e-mail`;
+
+  container.innerHTML = Object.keys(groups).sort().map(key=>{
+    const items = groups[key];
+    const label = getGroupLabel(key);
+    const emails = items.map(r=> r.e_mail).filter(Boolean);
+    const emailsText = emails.join(';');
+    return `<div class="group">
+      <div class="group-header">
+        <div>
+          <div class="group-title">${label}</div>
+          <div class="group-meta">${items.length} contato(s)</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" onclick="copyText('${emailsText.replace(/'/g,"\\'")}')">Copiar e-mails CCO</button>
+          <button class="btn btn-secondary" onclick="copyText('${emailsText.replace(/'/g,"\\'").split(';').join(',')}')">Copiar separados por vírgula</button>
+        </div>
+      </div>
+      ${items.map(r=>{
+        const msg = generateMessage(r);
+        generatedMessages++;
+        return `<div class="contact">
+          <div>
+            <a class="contact-name" href="${r.linkedin||'#'}" target="_blank">${r.nome||''}</a>
+            <div class="contact-meta">${r.empresa||''} · ${r.cargo||''} · <a href="mailto:${r.e_mail||''}" target="_blank">${r.e_mail||''}</a></div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button class="btn btn-secondary" onclick="copyText('${r.e_mail||''}')">Copiar e-mail</button>
+            <button class="btn btn-secondary" onclick="copyText(decodeURIComponent('${encodeURIComponent(msg)}'))">Copiar mensagem</button>
+          </div>
+          <div class="msg-box">${msg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('') || '<div class="empty">Nenhum contato com e-mail encontrado.</div>';
+}
+
+(async function init(){
+  const text = await fetch('08 - Baixa_Relevancia.csv').then(r=>r.text()).catch(()=>'');
+  if(!text){ document.getElementById('groups').innerHTML='<div class="empty">Erro ao carregar CSV.</div>'; return; }
+  rows = parseCSV(text);
+  render();
+  document.getElementById('k-msgs').textContent = String(generatedMessages);
+})();
+</script>
+</body>
+</html>
