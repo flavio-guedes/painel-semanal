@@ -195,6 +195,7 @@
       <button onclick="switchTab('pipeline', this)">Pipeline</button>
       <button onclick="switchTab('content', this)">Conteúdo</button>
       <button onclick="switchTab('team', this)">Equipe</button>
+      <button onclick="switchTab('black', this)">BLACK</button>
     </div>
 
     <!-- RELATÓRIO -->
@@ -868,6 +869,83 @@
             <li>Adicione checklist por etapa para garantir execução consistente.</li>
             <li>Monitore taxa de conversão por etapa para identificar gargalos.</li>
           </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLACK -->
+    <div id="black" class="panel">
+      <div class="sub-tabs">
+        <button class="active" onclick="switchSubTab('black-board', this)">Black Board</button>
+        <button onclick="switchSubTab('black-alert', this)">Radar Alert</button>
+      </div>
+
+      <div id="black-board" class="sub-panel open">
+        <div class="suggestion-box">
+          <h2>Black Board — Protocolo BLACK</h2>
+          <p>Pipeline de oportunidades HIGH VALUE em 6 colunas. Estados do protocolo: BLACK IDENTIFICADA → INVESTIGANDO → QUALIFICADA → BLACK PRIME → APLICADA/FOLLOW-UP → ENTREVISTA/PROCESSO/OFERTA/GANHA/PERDIDA.</p>
+          <div class="crm-board" style="margin-top:12px;">
+            <div class="crm-column">
+              <h3>BLACK IDENTIFICADA</h3>
+              <div class="count">Radar</div>
+              <div class="card-item"><h4>Oportunidade X</h4><p>Fonte: Radar BLACK</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+            <div class="crm-column">
+              <h3>INVESTIGANDO</h3>
+              <div class="count">Intelligence Brief</div>
+              <div class="card-item"><h4>Oportunidade Y</h4><p>Brief em andamento</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+            <div class="crm-column">
+              <h3>BLACK PRIME</h3>
+              <div class="count">QA + Aplicação</div>
+              <div class="card-item"><h4>Oportunidade Z</h4><p>Fit Score: 92</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+            <div class="crm-column">
+              <h3>APLICADA / FOLLOW-UP</h3>
+              <div class="count">Acompanhamento</div>
+              <div class="card-item"><h4>Oportunidade W</h4><p>Follow-up D+3</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+            <div class="crm-column">
+              <h3>ENTREVISTA / PROCESSO</h3>
+              <div class="count">Avaliação</div>
+              <div class="card-item"><h4>Oportunidade V</h4><p>Entrevista técnica</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+            <div class="crm-column">
+              <h3>GANHA / PERDIDA</h3>
+              <div class="count">Resultado</div>
+              <div class="card-item"><h4>Oportunidade U</h4><p>Oferta recebida</p><div class="actions"><button>Mover</button><button>Excluir</button></div></div>
+              <button style="margin-top:8px;width:100%;padding:8px;border-radius:999px;border:1px dashed var(--blue-600);background:var(--blue-50);color:var(--blue-800);cursor:pointer;font-weight:700;">+ Nova oportunidade</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="black-alert" class="sub-panel">
+        <div class="suggestion-box">
+          <h2>Radar Alert</h2>
+          <p>Alertas de BLACK PRIME e métricas do protocolo.</p>
+          <div class="front">
+            <h3>🚨 BLACK PRIME DETECTADA</h3>
+            <div>Empresa: —</div>
+            <div>Cargo: —</div>
+            <div>Remuneração: —</div>
+            <div>USD estimado: —</div>
+            <div>Score: —</div>
+            <div>Motivo: —</div>
+          </div>
+          <div class="stats-grid" style="margin-top:12px;">
+            <div class="stat-box"><h4>BLACK encontradas</h4><div class="value">—</div></div>
+            <div class="stat-box"><h4>BLACK qualificadas</h4><div class="value">—</div></div>
+            <div class="stat-box"><h4>BLACK aplicadas</h4><div class="value">—</div></div>
+            <div class="stat-box"><h4>Ofertas</h4><div class="value">—</div></div>
+            <div class="stat-box"><h4>Valor potencial/hora</h4><div class="value">—</div></div>
+            <div class="stat-box"><h4>Remuneração média</h4><div class="value">—</div></div>
+          </div>
         </div>
       </div>
     </div>
