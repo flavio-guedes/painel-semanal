@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lista Vaga/Contratação — Pipeline Hermes</title>
+<style>
+  :root {
+    --bg:#0f0f11; --surface:#18181c; --surface2:#222228; --border:#2a2a32;
+    --accent:#5b6ef7; --accent-dim:#3b4db040; --green:#3ecf8e; --yellow:#f5c842;
+    --red:#f56b6b; --blue:#6ba4f5; --text:#e8e8f0; --text-muted:#6e6e85;
+    --text-dim:#9999b0; --radius:10px; --mono:'JetBrains Mono','Fira Mono',monospace;
+    --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55;min-height:100vh}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:12px}
+  .header-left{display:flex;align-items:center;gap:14px}
+  .logo-mark{width:34px;height:34px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;letter-spacing:-0.5px}
+  .header-title{font-size:13px;font-weight:600;color:var(--text)}
+  .header-sub{font-size:11px;color:var(--text-muted);margin-top:1px}
+  .pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent)}
+  .toolbar{display:flex;gap:10px;padding:14px 28px 0;flex-wrap:wrap;align-items:center}
+  .search{padding:8px 12px;border-radius:8px;background:var(--surface);color:var(--text);border:1px solid var(--border);font-size:13px;min-width:220px}
+  .filter-btn{padding:5px 14px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text-dim);font-size:12px;cursor:pointer}
+  .filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:0 28px 28px}
+  table{width:100%;border-collapse:collapse;min-width:1100px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);vertical-align:top;font-size:12px}
+  th{color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.6px;background:rgba(0,0,0,.18);position:sticky;top:0}
+  td{line-height:1.45}
+  .status-select{padding:6px 8px;border-radius:6px;background:var(--surface);color:var(--text);border:1px solid var(--border);font-size:12px;width:100%}
+  .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.12);display:inline-block;white-space:nowrap}
+  .b-blue{color:#7dc4ff;border-color:rgba(125,196,255,.25);background:rgba(125,196,255,.10)}
+  .b-green{color:var(--green);border-color:rgba(10,255,176,.25);background:rgba(10,255,176,.10)}
+  .b-amber{color:var(--yellow);border-color:rgba(255,209,102,.25);background:rgba(255,209,102,.10)}
+  .b-red{color:var(--red);border-color:rgba(255,91,126,.25);background:rgba(255,91,126,.10)}
+  .small{color:var(--text-muted);font-size:11px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:14px 28px 0}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px}
+  .k{font-size:10px;color:var(--text-muted);font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .v{font-size:22px;font-weight:800;margin-top:4px}
+  @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)} th,td{padding:8px 5px;font-size:11px}}
+  @media(max-width:480px){.kpis{grid-template-columns:1fr 1fr} body{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <div class="logo-mark">VC</div>
+    <div>
+      <div class="header-title">Lista Vaga/Contratação</div>
+      <div class="header-sub">Tier 1 · Founder/CEO · 893 contatos</div>
+    </div>
+  </div>
+  <span class="pill" id="pill-count">Carregando...</span>
+</header>
+
+<div class="kpis">
+  <div class="card"><div class="k">Total</div><div class="v" id="k-total">0</div></div>
+  <div class="card"><div class="k">Enviado</div><div class="v" id="k-enviado">0</div></div>
+  <div class="card"><div class="k">Retorno OK</div><div class="v" id="k-retorno">0</div></div>
+  <div class="card"><div class="k">Sem resposta</div><div class="v" id="k-semresposta">0</div></div>
+  <div class="card"><div class="k">Ganho/Perda</div><div class="v" id="k-resultado">0</div></div>
+</div>
+
+<div class="toolbar">
+  <input class="search" id="search" placeholder="Buscar por nome, empresa ou cargo..." oninput="render()" />
+  <button class="filter-btn active" onclick="setFilter('all',this)">Todos</button>
+  <button class="filter-btn" onclick="setFilter('pendente',this)">Pendentes</button>
+  <button class="filter-btn" onclick="setFilter('enviado',this)">Enviado</button>
+  <button class="filter-btn" onclick="setFilter('retorno ok',this)">Retorno OK</button>
+  <button class="filter-btn" onclick="setFilter('sem resposta',this)">Sem resposta</button>
+  <button class="filter-btn" onclick="setFilter('ganho',this)">Ganho</button>
+  <button class="filter-btn" onclick="setFilter('perda',this)">Perda</button>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Nome</th><th>Empresa</th><th>Cargo</th><th>Canal</th><th>Status</th><th>Prioridade</th><th>Ação</th></tr></thead>
+    <tbody id="table"></tbody>
+  </table>
+</div>
+
+<script>
+const STATUS_OPTIONS = ["pendente","enviado","retorno ok","sem resposta","ganho","perda"];
+let rows = [];
+let filter = 'all';
+let search = '';
+
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h=>h.trim().toLowerCase());
+  return lines.slice(1).map((line,idx)=>{
+    const cols = line.split(',');
+    const obj = {};
+    headers.forEach((h,i)=> obj[h] = (cols[i]||'').trim());
+    obj._id = idx;
+    return obj;
+  });
+}
+
+function isBR(r){
+  const txt = `${r.nome||''} ${r.empresa||''} ${r.cargo||''}`.toLowerCase();
+  return /brasil|brazil|rio|são paulo|sp|rj|mg|bh|curitiba|porto alegre|salvador|recife|pernambuco|ceará|goiás|brasília|df/.test(txt);
+}
+
+function setFilter(f, btn){
+  filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function setStatus(id, status){
+  const r = rows.find(x=>x._id===id);
+  if(r){ r.status = status; saveState(); render(); }
+}
+
+function saveState(){
+  try {
+    const state = {};
+    rows.forEach(r=>{ if(r.status) state[r._id] = r.status; });
+    localStorage.setItem('vaga_contratacao_status', JSON.stringify(state));
+  } catch {}
+}
+function loadState(){
+  try {
+    const raw = localStorage.getItem('vaga_contratacao_status');
+    if(!raw) return;
+    const state = JSON.parse(raw);
+    rows.forEach(r=>{ if(state[r._id]) r.status = state[r._id]; });
+  } catch {}
+}
+
+function render(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const tbody = document.getElementById('table');
+  let data = rows;
+  if(filter !== 'all') data = data.filter(r=>(r.status||'pendente')===filter);
+  if(q) data = data.filter(r=> (r.nome||'').toLowerCase().includes(q) || (r.empresa||'').toLowerCase().includes(q) || (r.cargo||'').toLowerCase().includes(q));
+
+  // stats
+  const total = rows.length;
+  const enviado = rows.filter(r=>(r.status||'pendente')==='enviado').length;
+  const retorno = rows.filter(r=>(r.status||'pendente')==='retorno ok').length;
+  const semresposta = rows.filter(r=>(r.status||'pendente')==='sem resposta').length;
+  const resultado = rows.filter(r=>['ganho','perda'].includes(r.status||'pendente')).length;
+  document.getElementById('k-total').textContent = String(total);
+  document.getElementById('k-enviado').textContent = String(enviado);
+  document.getElementById('k-retorno').textContent = String(retorno);
+  document.getElementById('k-semresposta').textContent = String(semresposta);
+  document.getElementById('k-resultado').textContent = String(resultado);
+  document.getElementById('pill-count').textContent = `${total} contatos`;
+
+  tbody.innerHTML = data.slice(0,500).map(r=>{
+    const status = r.status || 'pendente';
+    const statusOpts = STATUS_OPTIONS.map(s=>`<option value="${s}" ${status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('');
+    const channel = (r.fonte||'').toLowerCase();
+    const chip = channel.includes('whatsapp') ? '<span class="badge b-green">WhatsApp</span>' : channel.includes('email') ? '<span class="badge b-blue">Email</span>' : '<span class="badge b-amber">LinkedIn</span>';
+    const link = r.linkedin ? `<a href="${r.linkedin}" target="_blank">Perfil</a>` : '';
+    const wa = r.whatsapp ? `<a href="https://wa.me/${r.whatsapp.replace(/\D/g,'')}" target="_blank">WhatsApp</a>` : '';
+    const email = r.e_mail ? `<a href="mailto:${r.e_mail}">Email</a>` : '';
+    const br = isBR(r) ? '<span class="badge b-green">BR</span>' : '<span class="badge b-blue">Global</span>';
+    return `<tr>
+      <td>${r.nome||''}<br/><span class="small">${r.telefone||''}</span></td>
+      <td>${r.empresa||''}<br/><span class="small">${r.cargo||''}</span></td>
+      <td>${chip}<br/>${br}<br/><span class="small">Prioridade: ${r.prioridade||''}</span></td>
+      <td><select class="status-select" onchange="setStatus(${r._id}, this.value)">${statusOpts}</select></td>
+      <td class="small">${r.prioridade||''}</td>
+      <td class="small">${[link,wa,email].filter(Boolean).join(' · ') || '—'}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="7" class="small">Nenhum registro.</td></tr>';
+}
+
+(async function init(){
+  const text = await fetch('00 - Lista Vaga_Contratacao.csv').then(r=>r.text()).catch(()=>'');
+  if(!text){ document.getElementById('table').innerHTML='<tr><td colspan="7" class="small">Erro ao carregar CSV.</td></tr>'; return; }
+  rows = parseCSV(text);
+  loadState();
+  render();
+})();
+</script>
+</body>
+</html>
