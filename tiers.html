@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tiers — Baixa Relevância</title>
+<style>
+  :root {
+    --bg:#0b0d12; --surface:#13161d; --surface2:#1b1f28; --border:#262c3a;
+    --accent:#4f6ef7; --green:#3ecf8e; --yellow:#f5c842; --red:#f56b6b;
+    --text:#e6e7ee; --text-muted:#7c8093; --text-dim:#9ca0b3;
+    --radius:10px; --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55;padding:28px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:32px;height:32px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px}
+  .title{font-weight:600;font-size:15px}
+  .subtitle{font-size:11px;color:var(--text-muted)}
+  .pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(79,110,247,.15);color:var(--accent);border:1px solid rgba(79,110,247,.35)}
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .tier{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .tier-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .tier-name{font-weight:700;font-size:13px;color:var(--text)}
+  .tier-count{font-size:11px;color:var(--text-muted)}
+  .tier-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .btn{padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .btn-secondary{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
+  .msg{width:100%;min-height:80px;padding:10px;border-radius:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border);font-size:12px;font-family:var(--sans);resize:vertical}
+  .feedback{font-size:11px;color:var(--green);font-weight:600;min-height:16px}
+  .empty{color:var(--text-muted);font-size:12px;padding:10px 0}
+  @media(max-width:480px){body{padding:16px} .tiers{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">T</div>
+    <div>
+      <div class="title">Tiers — Baixa Relevância</div>
+      <div class="subtitle">Selecione um tier para copiar e-mails ou mensagem</div>
+    </div>
+  </div>
+  <span class="pill" id="pill">Carregando...</span>
+</header>
+
+<div class="tiers" id="tiers"></div>
+
+<script>
+let rows = [];
+let tierData = {};
+const STORAGE_KEY = 'tiers_messages_v1';
+
+function parseCSV(text){
+  const lines = text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h=>h.trim().toLowerCase());
+  return lines.slice(1).map((line,idx)=>{
+    const cols = line.split(',');
+    const obj = {};
+    headers.forEach((h,i)=> obj[h] = (cols[i]||'').trim());
+    obj._id = idx;
+    return obj;
+  });
+}
+
+function getEmails(r){ return (r.e_mail||'').trim(); }
+
+function copyText(text, btnEl, feedbackEl){
+  if(!text) return;
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      const fb = feedbackEl;
+      if(fb){ fb.textContent = '✓ Copiado'; setTimeout(()=> fb.textContent = '', 1500); }
+      if(btnEl){ const old = btnEl.textContent; btnEl.textContent = '✓'; setTimeout(()=> btnEl.textContent = old, 1500); }
+    }).catch(()=>{});
+  }
+}
+
+function getDefaultMessage(tier, count){
+  const tierLabel = `Tier ${tier}`;
+  if(count === 0) return '';
+  return `Olá! Tudo bem?\n\nEstamos entrando em contato com você sobre a EPQ — preparação para concursos com foco em questões e acompanhamento personalizado.\n\nTemos uma condição especial de matrícula e queremos entender se faz sentido para você.\n\nSe quiser saber mais, é só responder por aqui.`;
+}
+
+function loadMessages(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+function saveMessages(obj){
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); } catch {}
+}
+
+function render(){
+  const container = document.getElementById('tiers');
+  const tiers = ['1','2','3','4','5','6'];
+  const tierCounts = {};
+  const tierEmails = {};
+  const tierContacts = {};
+
+  rows.forEach(r=>{
+    const tier = (r.tier || '').replace(/TIER\s*/i,'').trim() || '6';
+    if(!tierCounts[tier]){ tierCounts[tier]=0; tierEmails[tier]=[]; tierContacts[tier]=[]; }
+    tierCounts[tier]++;
+    const email = getEmails(r);
+    if(email) tierEmails[tier].push(email);
+    tierContacts[tier].push(r);
+  });
+
+  document.getElementById('pill').textContent = `${rows.length} contatos`;
+
+  container.innerHTML = tiers.map(t=>{
+    const count = tierCounts[t] || 0;
+    const emails = tierEmails[t] || [];
+    const contacts = tierContacts[t] || [];
+    const emailsText = emails.join(';');
+    const emailsComma = emails.join(',');
+    const saved = loadMessages();
+    const msg = saved[t] || getDefaultMessage(t, count);
+
+    return `<div class="tier">
+      <div class="tier-header">
+        <div>
+          <div class="tier-name">TIER ${t}</div>
+          <div class="tier-count">${count} contato(s)</div>
+        </div>
+        <div class="tier-actions">
+          <button class="btn" onclick="copyText('${emailsText.replace(/'/g,"\\'")}', this, this.nextElementSibling)">Copiar e-mails</button>
+          <span class="feedback"></span>
+          <button class="btn btn-secondary" onclick="copyText('${emailsText.replace(/'/g,"\\'")}', this, this.nextElementSibling)">CCO</button>
+          <span class="feedback"></span>
+          <button class="btn btn-secondary" onclick="copyText('${emailsComma.replace(/'/g,"\\'")}', this, this.nextElementSibling)">Copiar mensagem</button>
+          <span class="feedback"></span>
+        </div>
+      </div>
+      <textarea class="msg" id="msg-${t}" placeholder="Mensagem para o Tier ${t}..." oninput="saveMsg('${t}', this.value)">${msg.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea>
+    </div>`;
+  }).join('') || '<div class="empty">Nenhum contato encontrado.</div>';
+}
+
+function saveMsg(tier, value){
+  const saved = loadMessages();
+  saved[tier] = value;
+  saveMessages(saved);
+}
+
+(async function init(){
+  const text = await fetch('08 - Baixa_Relevancia.csv').then(r=>r.text()).catch(()=>'');
+  if(!text){ document.getElementById('tiers').innerHTML='<div class="empty">Erro ao carregar CSV.</div>'; return; }
+  rows = parseCSV(text);
+  render();
+})();
+</script>
+</body>
+</html>

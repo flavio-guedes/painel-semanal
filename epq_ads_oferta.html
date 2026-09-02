@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EPQ — Oferta Principal de Ads</title>
+<style>
+  :root {
+    --bg:#0b0d12; --surface:#13161d; --surface2:#1b1f28; --border:#262c3a;
+    --accent:#4f6ef7; --green:#3ecf8e; --yellow:#f5c842; --red:#f56b6b;
+    --text:#e6e7ee; --text-muted:#7c8093; --text-dim:#9ca0b3;
+    --radius:10px; --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55;padding:28px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+  .title{font-weight:700;font-size:16px}
+  .subtitle{font-size:11px;color:var(--text-muted)}
+  .pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:rgba(79,110,247,.15);color:var(--accent);border:1px solid rgba(79,110,247,.35)}
+  .flow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--text-dim);cursor:pointer}
+  .step.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .card-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .card-title{font-weight:700;font-size:13px;color:var(--text)}
+  .card-meta{font-size:11px;color:var(--text-muted)}
+  .script{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text);white-space:pre-wrap;margin-top:8px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .btn{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .btn-secondary{background:var(--surface);color:var(--text-dim);border:1px solid var(--border)}
+  .badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;border:1px solid rgba(255,255,255,.12);display:inline-block;white-space:nowrap}
+  .b-green{color:var(--green);border-color:rgba(10,255,176,.25);background:rgba(10,255,176,.10)}
+  .b-yellow{color:var(--yellow);border-color:rgba(255,209,102,.25);background:rgba(255,209,102,.10)}
+  .b-red{color:var(--red);border-color:rgba(255,91,126,.25);background:rgba(255,91,126,.10)}
+  .empty{color:var(--text-muted);font-size:12px;padding:10px 0}
+  @media(max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">EPQ</div>
+    <div>
+      <div class="title">Oferta Principal de Ads</div>
+      <div class="subtitle">Scripts WhatsApp — Matrícula Premiada</div>
+    </div>
+  </div>
+  <span class="pill">15 scripts</span>
+</header>
+
+<div class="flow" id="flow"></div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const scripts = [
+  { id:1, title:'PRIMEIRO CONTATO — LEAD CHEGOU PELO ANÚNCIO', tags:['início','qualificação'], text:`Oi! 👋 Tudo bem?\n\nVi que você se interessou pela Matrícula Premiada EPQ.\n\nAntes de te passar as opções, quero entender rapidinho seu momento para indicar a melhor condição.\n\n👉 Qual concurso você está se preparando ou pretende fazer?` },
+  { id:2, title:'QUALIFICAÇÃO — CONTINUAR A CONVERSA', tags:['qualificação','perfil'], text:`Boa! E você já está estudando ou ainda vai começar?\n\nA) Já estudo\nB) Estou começando agora\nC) Já estudei, mas parei\nD) Ainda não consegui começar\n\nDepois:\n\nEntendi. E hoje, o que mais está dificultando sua preparação?\n\n1️⃣ Falta de tempo\n2️⃣ Não sei exatamente o que estudar\n3️⃣ Tenho dificuldade para manter uma rotina\n4️⃣ Já estudo, mas sinto que não estou evoluindo\n5️⃣ Outro motivo` },
+  { id:3, title:'CONEXÃO COM A NECESSIDADE', tags:['conexão','objeção'], text:`Entendi.\n\nPelo que você me contou, o principal para você agora é [DIFICULDADE].\n\nE é justamente aí que uma preparação orientada faz diferença: você não precisa simplesmente estudar mais, precisa saber o que estudar, como estudar e como acompanhar sua evolução.\n\nA EPQ trabalha justamente com essa preparação focada em questões e acompanhamento.` },
+  { id:4, title:'APRESENTAÇÃO DA EPQ', tags:['apresentação','valor'], text:`A EPQ é uma preparação voltada para concursos, com professores e turmas presenciais em Nilópolis.\n\nA proposta é ajudar você a estudar de forma mais direcionada, utilizando questões como parte central da preparação.\n\nVocê conta com:\n\n✓ Professores especializados\n✓ Preparação focada em questões\n✓ Turma presencial\n✓ Orientação para sua preparação\n✓ Ambiente com outros alunos que também estão buscando a aprovação\n\nE agora estamos com uma condição especial para quem decidir começar.` },
+  { id:5, title:'ENTRADA DA OFERTA', tags:['oferta','matrícula premiada'], text:`Além da matrícula normal, estamos com a MATRÍCULA PREMIADA EPQ.\n\nFunciona assim:\n\nQuem realiza a matrícula dentro do período da campanha pode escolher uma vantagem extra para começar a preparação.\n\nVocê não precisa esperar o próximo mês para começar.\n\nA ideia é justamente: quem começa agora, começa com vantagem.` },
+  { id:6, title:'APRESENTAR AS 3 ESCOLHAS', tags:['oferta','benefícios'], text:`Você pode escolher a vantagem que mais combina com o seu momento:\n\n🎯 MAIS ORGANIZAÇÃO\nPlano de Estudos + Simulado\n\n🔥 MAIS ACOMPANHAMENTO\nGrupo VIP EPQ + Mentoria Inicial\n\n💳 MAIS ECONOMIA\nCondição especial de pagamento\n\nQual dessas faria mais diferença para você hoje?` },
+  { id:7, title:'SCRIPT INTELIGENTE POR PERFIL', tags:['script','perfil'], text:`Se o aluno disser que não sabe por onde começar:\n\n"Então, para você eu iria na opção de Mais Organização. O Plano de Estudos ajuda justamente a tirar aquela sensação de 'não sei por onde começar', e o simulado ajuda você a entender melhor seu nível."\n\nSe disser que está estudando sozinho:\n\n"Nesse caso, acredito que a opção de Mais Acompanhamento combina mais com você. Você entra no Grupo VIP EPQ e também participa da Mentoria Inicial."\n\nSe a principal objeção for preço:\n\n"Entendo. Por isso a Matrícula Premiada também tem uma opção de condição especial de pagamento."` },
+  { id:8, title:'QUANDO O LEAD DEMONSTRA INTERESSE', tags:['fechamento','interesse'], text:`Perfeito! 🙌\n\nEntão vamos fazer assim:\n\nEu verifico a condição disponível para sua turma e te passo tudo certinho para você conseguir realizar sua matrícula.\n\nA campanha da Matrícula Premiada é válida somente até [DATA].\n\nPosso te passar os dados para matrícula?` },
+  { id:9, title:'QUANDO O ALUNO DIZ "VOU PENSAR"', tags:['objeção','urgência'], text:`Claro, sem problema.\nSó quero te deixar uma informação importante para você decidir com tranquilidade:\n\nA condição da Matrícula Premiada é válida até [DATA].\n\nDepois desse período, você ainda poderá procurar a EPQ normalmente, mas essa vantagem de entrada pode não estar disponível.\n\nSe quiser, posso deixar as informações da turma e da condição aqui para você consultar.` },
+  { id:10, title:'"VOU VER COM MEU PAI / MÃE / ESPOSA"', tags:['objeção','apoio'], text:`Claro!\n\nInclusive, se quiser, posso te mandar um resumo bem simples com:\n\n• Como funciona a EPQ\n• Qual turma você entraria\n• Investimento\n• O que está incluso\n• Qual vantagem você escolheu\n• Prazo da Matrícula Premiada\n\nAssim fica mais fácil explicar para ele(a).` },
+  { id:11, title:'FOLLOW-UP — 24 HORAS', tags:['follow-up','urgência'], text:`Oi, [NOME]! Tudo bem?\n\nPassando só para saber se conseguiu avaliar a condição da Matrícula Premiada EPQ.\n\nPelo que você me contou, acredito que a opção [BENEFÍCIO] seria a mais interessante para o seu momento.\n\nSe ficou alguma dúvida sobre a turma, investimento ou matrícula, pode me chamar por aqui. 👍` },
+  { id:12, title:'ÚLTIMAS 48 HORAS', tags:['follow-up','urgência'], text:`⚠️ [NOME], passando para te avisar:\n\nEstamos entrando nas últimas 48 horas da Matrícula Premiada EPQ.\n\nSe você estava pensando em começar sua preparação, esse é o momento para garantir a condição e escolher sua vantagem de entrada.\n\n🎯 Plano de Estudos + Simulado\n🔥 Grupo VIP + Mentoria\n💳 Condição especial\n\nSe quiser aproveitar, posso te ajudar a finalizar por aqui.` },
+  { id:13, title:'ÚLTIMO DIA', tags:['follow-up','urgência'], text:`🚨 [NOME], hoje é o último dia!\n\nA Matrícula Premiada EPQ encerra hoje.\n\nDepois de hoje, a condição especial e os benefícios da campanha podem não estar mais disponíveis.\n\nSe você decidiu começar sua preparação, posso te ajudar a concluir sua matrícula agora.\n\nQuer que eu te passe o passo a passo?` },
+  { id:14, title:'QUANDO O LEAD ESTÁ PRONTO PARA FECHAR', tags:['fechamento','matrícula'], text:`Excelente decisão, [NOME]! 👊\n\nVamos colocar isso em prática.\n\nSua matrícula ficará com:\n\n📚 Turma: [TURMA]\n📅 Início: [DATA]\n🎁 Benefício escolhido: [BENEFÍCIO]\n💰 Investimento: [VALOR]\n\nPara finalizar, basta [PASSO DA MATRÍCULA].\n\nAssim que concluir, me envie o comprovante por aqui para confirmarmos sua entrada na turma. 🚀` },
+  { id:15, title:'PÓS-MATRÍCULA — CONFIRMAÇÃO', tags:['pós-venda','confirmação'], text:`🎉 Matrícula confirmada, [NOME]!\n\nSeja muito bem-vindo(a) à EPQ!\n\nSua preparação começa agora. 🚀\n\n🎁 Benefício escolhido: [BENEFÍCIO]\n\nNossa equipe vai te orientar sobre os próximos passos e sobre o acesso à sua turma.\n\nAgora é foco, disciplina e constância.\n\nQuem começa agora, começa com vantagem. 👊` }
+];
+
+const flowSteps = [
+  { key:'início', label:'Início' },
+  { key:'qualificação', label:'Qualificação' },
+  { key:'conexão', label:'Conexão' },
+  { key:'apresentação', label:'Apresentação' },
+  { key:'oferta', label:'Oferta' },
+  { key:'script', label:'Script por perfil' },
+  { key:'fechamento', label:'Fechamento' },
+  { key:'objeção', label:'Objeções' },
+  { key:'follow-up', label:'Follow-up' },
+  { key:'pós-venda', label:'Pós-venda' }
+];
+
+let activeStep = 'all';
+
+function setStep(key){
+  activeStep = key;
+  document.querySelectorAll('.step').forEach(el=>{
+    el.classList.toggle('active', el.dataset.key === key);
+  });
+  render();
+}
+
+function copyText(text){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(text).catch(()=>{});
+  }
+}
+
+function getTagClass(tag){
+  if(['início','qualificação','conexão','apresentação','oferta'].includes(tag)) return 'b-green';
+  if(['fechamento','pós-venda'].includes(tag)) return 'b-blue';
+  if(['objeção','follow-up'].includes(tag)) return 'b-yellow';
+  return 'b-green';
+}
+
+function render(){
+  const flowEl = document.getElementById('flow');
+  flowEl.innerHTML = `<button class="step ${activeStep==='all'?'active':''}" data-key="all" onclick="setStep('all')">Todos</button>` +
+    flowSteps.map(s=>`<button class="step ${activeStep===s.key?'active':''}" data-key="${s.key}" onclick="setStep('${s.key}')">${s.label}</button>`).join('');
+
+  const grid = document.getElementById('grid');
+  const filtered = activeStep === 'all' ? scripts : scripts.filter(s=> s.tags.includes(activeStep));
+
+  grid.innerHTML = filtered.map(s=>`<div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">${s.id}. ${s.title}</div>
+        <div class="card-meta">${s.tags.map(t=>`<span class="badge ${getTagClass(t)}">${t}</span>`).join(' ')}</div>
+      </div>
+    </div>
+    <div class="script">${s.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    <div class="actions">
+      <button class="btn" onclick="copyText(decodeURIComponent('${encodeURIComponent(s.text)}'))">Copiar script</button>
+    </div>
+  </div>`).join('') || '<div class="empty">Nenhum script encontrado.</div>';
+}
+
+render();
+</script>
+</body>
+</html>
